@@ -4,6 +4,8 @@
 """ Test. """
 
 from __future__ import print_function, division
+import sys
+sys.path.append('../pygonize')
 import unittest
 from shapely.geometry import Point, Polygon
 from pygonize import marchingsquares, interp

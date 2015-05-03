@@ -4,10 +4,12 @@
 """ Test. """
 
 from __future__ import print_function, division
+import sys
+sys.path.append('../pygonize')
 import tempfile
 import unittest
 import numpy
-from pygonize import pygonize
+import pygonize
 from test_base_class import PygonizeTest
 
 
@@ -18,30 +20,30 @@ class TestPygonize(PygonizeTest):
         self.npz = numpy.array([[50, 40, 20], [45, 42, 35], [46, 47, 45]])
 
     def test_precision_and_scale(self):
-        self.assertEqual(pygonize.precision_and_scale(0), (1, 0))
-        self.assertEqual(pygonize.precision_and_scale(1), (1, 0))
-        self.assertEqual(pygonize.precision_and_scale(10), (2, 0))
-        self.assertEqual(pygonize.precision_and_scale(250), (3, 0))
-        self.assertEqual(pygonize.precision_and_scale(2629), (4, 0))
-        self.assertEqual(pygonize.precision_and_scale(262915), (6, 0))
-        self.assertEqual(pygonize.precision_and_scale(123456789), (9, 0))
-        self.assertEqual(pygonize.precision_and_scale(26.29), (4, 2))
-        self.assertEqual(pygonize.precision_and_scale(1.12345), (6, 5))
-        self.assertEqual(pygonize.precision_and_scale(-10), (2, 0))
-        self.assertEqual(pygonize.precision_and_scale(-10.005), (5, 3))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(0), (1, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(1), (1, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(10), (2, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(250), (3, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(2629), (4, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(262915), (6, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(123456789), (9, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(26.29), (4, 2))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(1.12345), (6, 5))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(-10), (2, 0))
+        self.assertEqual(pygonize.pygonize.precision_and_scale(-10.005), (5, 3))
 
     def test_limits(self):
-        self.assertEqual(pygonize.limits(5, [0, 2, 4, 6, 8, 10]), (4, 6))
-        self.assertEqual(pygonize.limits(5.5, [0, 2, 4, 6, 8, 10]), (4, 6))
-        self.assertEqual(pygonize.limits(0.01, [0, 2, 4, 6, 8, 10]), (0, 2))
-        self.assertEqual(pygonize.limits(12, [0, 2, 4, 6, 8, 10]), None)
-        self.assertEqual(pygonize.limits(-5, [0, 2, 4, 6, 8, 10]), None)
-        self.assertEqual(pygonize.limits(5, [0, 4, 8, 6, 2, 10]), (4, 6))
-        self.assertEqual(pygonize.limits(4, [0, 4, 8, 6, 2, 10]), (4, 4))
-        self.assertEqual(pygonize.limits(10.0, [0, 2, 4, 6, 8, 10]), (10, 10))
-        self.assertEqual(pygonize.limits(0.5, [0, 0.2, 0.4, 0.6, 0.8, 1]), (0.4, 0.6))
-        self.assertEqual(pygonize.limits(0.6, [0, 0.2, 0.4, 0.6, 0.8, 1]), (0.6, 0.6))
-        self.assertEqual(pygonize.limits(1.0, [0, 0.2, 0.4, 0.6, 0.8, 1]), (1.0, 1.0))
+        self.assertEqual(pygonize.pygonize.limits(5, [0, 2, 4, 6, 8, 10]), (4, 6))
+        self.assertEqual(pygonize.pygonize.limits(5.5, [0, 2, 4, 6, 8, 10]), (4, 6))
+        self.assertEqual(pygonize.pygonize.limits(0.01, [0, 2, 4, 6, 8, 10]), (0, 2))
+        self.assertEqual(pygonize.pygonize.limits(12, [0, 2, 4, 6, 8, 10]), None)
+        self.assertEqual(pygonize.pygonize.limits(-5, [0, 2, 4, 6, 8, 10]), None)
+        self.assertEqual(pygonize.pygonize.limits(5, [0, 4, 8, 6, 2, 10]), (4, 6))
+        self.assertEqual(pygonize.pygonize.limits(4, [0, 4, 8, 6, 2, 10]), (4, 4))
+        self.assertEqual(pygonize.pygonize.limits(10.0, [0, 2, 4, 6, 8, 10]), (10, 10))
+        self.assertEqual(pygonize.pygonize.limits(0.5, [0, 0.2, 0.4, 0.6, 0.8, 1]), (0.4, 0.6))
+        self.assertEqual(pygonize.pygonize.limits(0.6, [0, 0.2, 0.4, 0.6, 0.8, 1]), (0.6, 0.6))
+        self.assertEqual(pygonize.pygonize.limits(1.0, [0, 0.2, 0.4, 0.6, 0.8, 1]), (1.0, 1.0))
 
     def test_read_array(self):
         p = pygonize.Pygonize()
@@ -62,7 +64,7 @@ class TestPygonize(PygonizeTest):
                [460, 465, 470, 460, 450]]
 
         p = pygonize.Pygonize()
-        p.read_raster('../test/data/raster.tif')
+        p.read_raster('test/data/raster.tif')
         self.assertEqual(p.lx.tolist(), numpy.arange(x0 + dx / 2., x0 + dx * nx, dx).tolist())
         self.assertEqual(p.ly.tolist(), numpy.arange(y0 - dy / 2., y0 - dy * ny, -dy).tolist())
         self.assertEqual(p.z.tolist(), dat)
@@ -124,21 +126,21 @@ class TestPygonize(PygonizeTest):
 
     def test_vectorize_isobands_from_raster_1(self):
         p = pygonize.Pygonize()
-        p.read_raster('../test/data/raster.tif')
+        p.read_raster('test/data/raster.tif')
         polys = p.vectorize_isobands([200, 250, 300, 350, 400, 450, 500])
         self.assertEqual(len(polys), 32)
-        self.valid_with_file(polys, '../test/data/isoband_from_raster_1.txt')
+        self.valid_with_file(polys, 'test/data/isoband_from_raster_1.txt')
 
     def test_vectorize_isobands_from_raster_1_export_shapefile(self):
         t = tempfile.NamedTemporaryFile().name  # temporay filename
 
         p = pygonize.Pygonize()
-        p.read_raster('../test/data/raster.tif')
+        p.read_raster('test/data/raster.tif')
         p.write_shapefile([200, 250, 300, 350, 400, 450, 500], t)
 
         for ext in ['.shp', '.shx', '.dbf']:
-            with open('../test/data/isoband_from_raster_1' + ext, 'rb') as f1, open(t + ext, 'rb') as f2:
-                self.assertEqual(f1.read(), f2.read())
+            with open('test/data/isoband_from_raster_1' + ext, 'rb') as f1, open(t + ext, 'rb') as f2:
+                self.assertEqual(f1.read(), f2.read(), 'Error in %s' % ext)
 
 if __name__ == '__main__':
     unittest.main()

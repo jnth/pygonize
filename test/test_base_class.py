@@ -101,8 +101,8 @@ class PygonizeTest(unittest.TestCase):
         :param polys: list of polygons.
         :param fn: path of file.
         """
-        v1 = ppolys(polys, output='')
-        v2 = open(fn, 'r').read()
+        v1 = ppolys(polys, output='').replace('\r', '')
+        v2 = open(fn, 'rb').read().replace('\r', '')
         self.assertEqual(v1, v2)
 
     def valid_with_fig(self, polys, **kwargs):

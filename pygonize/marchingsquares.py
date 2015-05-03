@@ -6,7 +6,7 @@
 from __future__ import print_function, division
 import numpy
 from shapely.geometry import Point, Polygon
-from .interp import interpolate
+from interp import interpolate
 
 
 def remove_duplicate_point(lp):
