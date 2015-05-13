@@ -1,10 +1,13 @@
 # TODOs
 
-1. Create test function to compare `dbf` and `shp` files (error when using differents OS)
+ * Compatibility with Python 3.x.
 
-2. Compatibility with Python 3.x.
+ * Better documentation.
 
-3. Better documentation.
+ * Better setup.py with test inside.
 
-4. Better setup.py with test inside.
-
+ * __Polygons Z limits is not consistent with levels !__
+   It done only when exporting to shapefile. That function must be done before.
+   
+ * Create a `export_postgis` function to create PostGIS queries.
+ 

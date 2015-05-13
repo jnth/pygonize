@@ -7,9 +7,12 @@
 import unittest
 from shapely.geometry import Point
 import numpy
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import shapefile
+try:
+    import matplotlib.pyplot as plt
+    import matplotlib.patches as mpatches
+except:
+    pass
 
 
 def prettify(val, ndigits=2):
@@ -82,10 +85,12 @@ class PygonizeTest(unittest.TestCase):
         """
         coords = list(p.exterior.coords)
         self.assertEqual(len(coords), len(coo))
+        msg = "differences between coordinates !\nlist1 = {c1}\nlist2 = {c2}".format(
+            c1=str(coo), c2=ppolys(p, output='str'))
         for (x1, y1, z1), (x2, y2, z2) in zip(coords, coo):
-            self.assertAlmostEqual(x1, x2, delta=0.1)
-            self.assertAlmostEqual(y1, y2, delta=0.1)
-            self.assertAlmostEqual(z1, z2, delta=0.1)
+            self.assertAlmostEqual(x1, x2, delta=0.1, msg=msg)
+            self.assertAlmostEqual(y1, y2, delta=0.1, msg=msg)
+            self.assertAlmostEqual(z1, z2, delta=0.1, msg=msg)
 
     def valid_list(self, l1, l2):
         """ Validate two list.
@@ -101,8 +106,8 @@ class PygonizeTest(unittest.TestCase):
         :param polys: list of polygons.
         :param fn: path of file.
         """
-        v1 = ppolys(polys, output='').replace('\r', '')
-        v2 = open(fn, 'rb').read().replace('\r', '')
+        v1 = ppolys(polys, output='').strip().replace('\r', '')
+        v2 = open(fn, 'rb').read().strip().replace('\r', '')
         self.assertEqual(v1, v2)
 
     def valid_with_fig(self, polys, **kwargs):
@@ -112,8 +117,8 @@ class PygonizeTest(unittest.TestCase):
         """
         ppolys(polys)  # print coordinate
         figpolys(polys, **kwargs)  # show figure
-
-    def valid_with_shape(self, polys, fno):
+        
+    def valid_with_gis(self, polys, fno):
         """ Create shapefile from polygons to validate with a GIS software.
         :param polys: list of polygons.
         """

@@ -5,10 +5,10 @@
 
 
 from setuptools import setup
-
+import pygonize
 
 setup(name='pygonize',
-      version='0.1.dev1',
+      version=pygonize.__version__,
       description='Polygonize raster data into isoband vector.',
       author='jnth',
       author_email='jonathan.virga@gmail.com',

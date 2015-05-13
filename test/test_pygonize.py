@@ -9,8 +9,9 @@ sys.path.append('../pygonize')
 import tempfile
 import unittest
 import numpy
+import shapefile
 import pygonize
-from test_base_class import PygonizeTest
+from test_base_class import PygonizeTest, ppolys
 
 
 class TestPygonize(PygonizeTest):
@@ -80,14 +81,14 @@ class TestPygonize(PygonizeTest):
         self.valid_poly(polys[2], [[4.8, 11, 43], [5.2, 11, 42], [6, 7, 42], [4.67, 7, 43], [4.8, 11, 43]])
         self.valid_poly(polys[3], [[4.4, 11, 44], [4.8, 11, 43], [4.67, 7, 43], [3.33, 7, 44], [4.4, 11, 44]])
         self.valid_poly(polys[4], [[4, 11, 45], [4.4, 11, 44], [3.33, 7, 44], [2, 7, 45], [4, 11, 45]])
-        self.valid_poly(polys[5], [[6, 11, 40], [7.14, 7, 40], [6.57, 7, 41], [6, 9, 41], [6, 11, 40]])
+        self.valid_poly(polys[5], [[7.14, 7, 40], [6.57, 7, 41], [6, 9, 41], [6, 11, 40], [7.14, 7, 40]])
         self.valid_poly(polys[6], [[6.57, 7, 41], [6, 7, 42], [6, 9, 41], [6.57, 7, 41]])
         self.valid_poly(polys[7], [[4.67, 7, 43], [6, 7, 42], [6, 6.2, 43], [4.67, 7, 43]])
         self.valid_poly(polys[8], [[3.33, 7, 44], [4.67, 7, 43], [6, 6.2, 43], [6, 5.4, 44], [3.33, 7, 44]])
         self.valid_poly(polys[9], [[2, 7, 45], [3.33, 7, 44], [6, 5.4, 44], [6, 4.6, 45], [2, 7, 45]])
         self.valid_poly(polys[10], [[6.57, 7, 41], [7.14, 7, 40], [10, 5, 40], [10, 4.6, 41], [6.57, 7, 41]])
         self.valid_poly(polys[11], [[6, 7, 42], [6.57, 7, 41], [10, 4.6, 41], [10, 4.2, 42], [6, 7, 42]])
-        self.valid_poly(polys[12], [[6, 7, 42], [10, 4.2, 42], [10, 3.8, 43], [6, 6.2, 43], [6, 7, 42]])
+        self.valid_poly(polys[12], [[10, 4.2, 42], [10, 3.8, 43], [6, 6.2, 43], [6, 7, 42], [10, 4.2, 42]])
         self.valid_poly(polys[13], [[10, 3.8, 43], [10, 3.4, 44], [6, 5.4, 44], [6, 6.2, 43], [10, 3.8, 43]])
         self.valid_poly(polys[14], [[10, 3.4, 44], [10, 3, 45], [6, 4.6, 45], [6, 5.4, 44], [10, 3.4, 44]])
 
@@ -100,7 +101,7 @@ class TestPygonize(PygonizeTest):
         self.valid_poly(polys[0], [[2, 11, 50], [6, 11, 40], [6, 7, 42], [2, 7, 45], [2, 11, 50]])
         self.valid_poly(polys[1], [[8, 11, 30], [10, 11, 20], [10, 8.33, 30], [8, 11, 30]])
         self.valid_poly(polys[2], [[6, 11, 40], [8, 11, 30], [10, 8.33, 30], [10, 7, 35], [7.14, 7, 40], [6, 11, 40]])
-        self.valid_poly(polys[3], [[6, 11, 40], [7.14, 7, 40], [6, 7, 42], [6, 11, 40]])
+        self.valid_poly(polys[3], [[7.14, 7, 40], [6, 7, 42], [6, 11, 40], [7.14, 7, 40]])
         self.valid_poly(polys[4], [[2, 7, 45], [6, 7, 42], [6, 3, 47], [2, 3, 46], [2, 7, 45]])
         self.valid_poly(polys[5], [[7.14, 7, 40], [10, 7, 35], [10, 5, 40], [7.14, 7, 40]])
         self.valid_poly(polys[6], [[6, 7, 42], [7.14, 7, 40], [10, 5, 40], [10, 3, 45], [6, 3, 47], [6, 7, 42]])
@@ -117,9 +118,9 @@ class TestPygonize(PygonizeTest):
         self.valid_poly(polys[3], [[8, 11, 30], [9, 11, 25], [10, 9.67, 25], [10, 8.33, 30], [8, 11, 30]])
         self.valid_poly(polys[4], [[7, 11, 35], [8, 11, 30], [10, 8.33, 30], [10, 7, 35], [7, 11, 35]])
         self.valid_poly(polys[5], [[6, 11, 40], [7, 11, 35], [10, 7, 35], [7.14, 7, 40], [6, 11, 40]])
-        self.valid_poly(polys[6], [[6, 11, 40], [7.14, 7, 40], [6, 7, 42], [6, 11, 40]])
+        self.valid_poly(polys[6], [[7.14, 7, 40], [6, 7, 42], [6, 11, 40], [7.14, 7, 40]])
         self.valid_poly(polys[7], [[2, 7, 45], [6, 7, 42], [6, 4.6, 45], [2, 7, 45]])
-        self.valid_poly(polys[8], [[2, 7, 45], [6, 4.6, 45], [6, 3, 47], [2, 3, 46], [2, 7, 45]])
+        self.valid_poly(polys[8], [[6, 4.6, 45], [6, 3, 47], [2, 3, 46], [2, 7, 45], [6, 4.6, 45]])
         self.valid_poly(polys[9], [[7.14, 7, 40], [10, 7, 35], [10, 5, 40], [7.14, 7, 40]])
         self.valid_poly(polys[10], [[6, 7, 42], [7.14, 7, 40], [10, 5, 40], [10, 3, 45], [6, 4.6, 45], [6, 7, 42]])
         self.valid_poly(polys[11], [[10, 3, 45], [6, 3, 47], [6, 4.6, 45], [10, 3, 45]])
@@ -133,14 +134,26 @@ class TestPygonize(PygonizeTest):
 
     def test_vectorize_isobands_from_raster_1_export_shapefile(self):
         t = tempfile.NamedTemporaryFile().name  # temporay filename
-
         p = pygonize.Pygonize()
         p.read_raster('test/data/raster.tif')
         p.write_shapefile([200, 250, 300, 350, 400, 450, 500], t)
 
-        for ext in ['.shp', '.shx', '.dbf']:
-            with open('test/data/isoband_from_raster_1' + ext, 'rb') as f1, open(t + ext, 'rb') as f2:
-                self.assertEqual(f1.read(), f2.read(), 'Error in %s' % ext)
+        # Load files
+        f1 = shapefile.Reader('test/data/isoband_from_raster_1.shp')
+        f2 = shapefile.Reader(t)
+        
+        # Compare records
+        self.assertEqual(f1.fields, f2.fields)
+        self.assertEqual(f1.records(), f2.records())
+        
+        # Compare geometries
+        s1, s2 = f1.shapes(), f2.shapes()
+        self.assertEqual(f1.bbox, f2.bbox)
+        self.assertEqual(len(s1), len(s2))
+        for i in range(len(s1)):
+            self.assertEqual(s1[i].bbox, s2[i].bbox)
+            self.assertEqual(s1[i].points, s2[i].points)
+
 
 if __name__ == '__main__':
     unittest.main()

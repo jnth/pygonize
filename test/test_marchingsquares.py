@@ -28,11 +28,12 @@ class TestBaseFunctions(PygonizeTest):
 
     def test_get_idx_isoband(self):
         self.assertEqual(marchingsquares.get_idx_isoband(2, 5, 10), 0)
-        self.assertEqual(marchingsquares.get_idx_isoband(5, 5, 10), 1)
+        self.assertEqual(marchingsquares.get_idx_isoband(5, 5, 10), 0)
         self.assertEqual(marchingsquares.get_idx_isoband(6, 5, 10), 1)
-        self.assertEqual(marchingsquares.get_idx_isoband(10, 5, 10), 1)
+        self.assertEqual(marchingsquares.get_idx_isoband(10, 5, 10), 2)
         self.assertEqual(marchingsquares.get_idx_isoband(12, 5, 10), 2)
         self.assertEqual(marchingsquares.get_idx_isoband(15, 10, 5), 2)
+        self.assertEqual(marchingsquares.get_idx_isoband(30, 30, 40), 0)
 
     def test_remove_duplicate_point(self):
         """ Test the 'remove_duplicate_point' function.
@@ -70,10 +71,7 @@ class TestBaseFunctions(PygonizeTest):
 
         self.assertEqual(marchingsquares.isoband_on_edge(p1, p2, 30, 35), [])
 
-        p = marchingsquares.isoband_on_edge(p1, p2, 1, 5)
-        self.assertEqual(len(p), 2)
-        self.valid_point(p[0], (10, 10, 5))
-        self.valid_point(p[1], (10, 10, 5))
+        self.assertEqual(marchingsquares.isoband_on_edge(p1, p2, 1, 5), [])
 
         p = marchingsquares.isoband_on_edge(p1, p2, 1, 6)
         self.assertEqual(len(p), 2)
@@ -156,10 +154,12 @@ class TestMarchingSquares(PygonizeTest):
         sq = marchingsquares.Square(self.p1, self.p2, self.p3, self.p4)
         self.assertEqual(sq.isoband_classif(10, 12), "2222")
         self.assertEqual(sq.isoband_classif(55, 60), "0000")
-        self.assertEqual(sq.isoband_classif(10, 15), "1222")
-        self.assertEqual(sq.isoband_classif(10, 20), "1112")
-        self.assertEqual(sq.isoband_classif(16, 20), "0112")
-        self.assertEqual(sq.isoband_classif(20, 25), "0102")
+        self.assertEqual(sq.isoband_classif(10, 15), "2222")
+        self.assertEqual(sq.isoband_classif(10, 16), "1222")
+        self.assertEqual(sq.isoband_classif(10, 20), "1212")
+        self.assertEqual(sq.isoband_classif(16, 20), "0212")
+        self.assertEqual(sq.isoband_classif(20, 25), "0002")
+        self.assertEqual(sq.isoband_classif(19, 25), "0102")
         self.assertEqual(sq.isoband_classif(25, 30), "0001")
 
     def test_make_polygon(self):

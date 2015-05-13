@@ -41,14 +41,14 @@ def get_idx_isoband(v, mn, mx):
     :param v: value for comparison.
     :param mn: minimum value of an isoband.
     :param mx: maximal value of an isoband.
-    :return: 0 if v < mn, 2 if v > mx, 1 if v between mn and mx.
+    :return: 0 if v <= mn, 2 if v >= mx, 1 if v between mn and mx.
     """
     if mn > mx:
         mn, mx = mx, mn  # inverse data
 
-    if v < mn:
+    if v <= mn:
         return 0
-    if v > mx:
+    if v >= mx:
         return 2
     return 1
 

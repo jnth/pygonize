@@ -12,6 +12,10 @@ import numpy
 from osgeo import gdal
 from shapely.geometry import Point
 import shapefile
+import logging
+
+
+log = logging.getLogger(__name__)
 
 
 def vectorize_isoband_worker(wp1, wp2, wp3, wp4, wlevels):
@@ -84,6 +88,9 @@ class Pygonize:
         self.lx = x
         self.ly = y
         self.z = z
+        
+        # Log
+        log.info("read array of %i x %i" % (len(x), len(y)))
 
     def read_raster(self, fn, band=1):
         """ Read raster data.
@@ -98,6 +105,9 @@ class Pygonize:
         ny, nx = self.z.shape
         self.lx = numpy.arange(xmin + dx / 2, xmin + nx * dx, dx)
         self.ly = numpy.arange(ymin + dy / 2, ymin + ny * dy, dy)
+        
+        # Log
+        log.info("read raster of %i x %i" % (nx, ny))
 
     def vectorize_isobands(self, levels):
         """ Vectorization of isobands.
@@ -108,13 +118,14 @@ class Pygonize:
         levels = sorted(levels)
         pool = multiprocessing.Pool()  # start a pool of worker on the local machine
         outs = list()  # list of multiprocessing.pool.AsyncResult
-
+        
         ny, nx = self.z.shape
 
         # Grid of X and Y
         x, y = numpy.meshgrid(self.lx, self.ly)
-
+        
         # Split dataset into squares and vectorize
+        log.info("starting isoband vectorization with levels %s..." % levels)
         for iy in range(ny - 1):
             for ix in range(nx - 1):
                 part_z = self.z[iy:iy+2, ix:ix+2]
@@ -128,16 +139,17 @@ class Pygonize:
 
                 w = pool.apply_async(vectorize_isoband_worker, args=(p1, p2, p3, p4, levels))  # create task
                 outs.append(w)
-
+                
         # Wait for all process to be terminated
         pool.close()
         pool.join()
-
+        
         # Join all resulting polygons
         polys = list()
         for w in outs:
             polys += w.get()
-
+        
+        log.info("isoband vectorization done.")
         return polys
 
     def write_shapefile(self, levels, fn):
@@ -146,6 +158,7 @@ class Pygonize:
         :param levels: list of levels.
         :param fn: path of shapefile.
         """
+        log.info("writing isobands into shapefile...")
         levels = sorted(levels)
         polys = self.vectorize_isobands(levels)
         inf = map(precision_and_scale, levels)  # precision and scale of levels
@@ -177,5 +190,5 @@ class Pygonize:
             w.record(ipoly, zmin, zmax)
 
         w.save(fn)
-
+        log.info("writing isobands into shapefile done.")
 
