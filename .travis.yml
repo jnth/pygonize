@@ -2,6 +2,6 @@ language: python
 python:
   - "2.7"
 install:
-  - "python setup.py install"
   - "pip install numpy shapely pyshp GDAL"
+  - "python setup.py install"
 script: "python -m unittest discover test/"
