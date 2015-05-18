@@ -1,18 +1,17 @@
 language: python
 python:
   - "2.7"
-before_install:
-  - wget http://download.osgeo.org/gdal/1.11.2/gdal-1.11.2.tar.gz -O /tmp/gdal-1.11.2.tar.gz
-  - cd /tmp
+install:
+  - wget http://download.osgeo.org/gdal/1.11.2/gdal-1.11.2.tar.gz
   - tar zxvf gdal-1.11.2.tar.gz
   - cd gdal-1.11.2
   - ./configure --with-python
   - make
-  - sudo make install
-install:
+  - make install
   - "pip install numpy"
   - "pip install shapely"
   - "pip install pyshp"
   - "pip install GDAL==1.11.2"
   - "python setup.py install"
 script: "python -m unittest discover test/"
+sudo: required
