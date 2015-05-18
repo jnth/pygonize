@@ -11,10 +11,12 @@ install:
   - export GDAL_HOME=/tmp/gdal-1.11.2
   - export PATH=${GDAL_HOME}/bin:${PATH}
   - export LD_LIBRARY_PATH=${GDAL_HOME}/lib:${LD_LIBRARY_PATH}
-  - "pip install numpy"
-  - "pip install shapely"
-  - "pip install pyshp"
-  - "pip install GDAL==1.11.2"
-  - "python setup.py install"
-script: "python -m unittest discover test/"
+  - pip install numpy
+  - pip install shapely
+  - pip install pyshp
+  - pip install GDAL==1.11.2
+  - cd $HOME/jnth/pygonize
+  - python setup.py install
+script:
+  - python -m unittest discover test
 sudo: required
