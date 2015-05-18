@@ -5,9 +5,12 @@ install:
   - wget http://download.osgeo.org/gdal/1.11.2/gdal-1.11.2.tar.gz
   - tar zxvf gdal-1.11.2.tar.gz
   - cd gdal-1.11.2
-  - ./configure --with-python
+  - ./configure --with-python --prefix=/tmp/gdal-1.11.2
   - make
   - make install
+  - export GDAL_HOME=/tmp/gdal-1.11.2
+  - export PATH=${GDAL_HOME}/bin:${PATH}
+  - export LD_LIBRARY_PATH=${GDAL_HOME}/lib:${LD_LIBRARY_PATH}
   - "pip install numpy"
   - "pip install shapely"
   - "pip install pyshp"
