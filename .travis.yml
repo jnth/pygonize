@@ -1,7 +1,7 @@
 language: python
 python:
   - "2.7"
-before_install
+before_install:
   # source: https://github.com/openaddresses/machine/blob/master/.travis.yml
   - sudo apt-get update -y
   - sudo apt-get install -y -qq gdal-bin libgdal1-dev python-dev python-gdal python-numpy
