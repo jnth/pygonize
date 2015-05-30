@@ -90,7 +90,7 @@ class Pygonize:
         self.z = z
         
         # Log
-        log.info("read array of %i x %i" % (len(x), len(y)))
+        log.info("read array of {0} x {1}".format(len(x), len(y)))
 
     def read_raster(self, fn, band=1):
         """ Read raster data.
@@ -107,7 +107,7 @@ class Pygonize:
         self.ly = numpy.arange(ymin + dy / 2, ymin + ny * dy, dy)
         
         # Log
-        log.info("read raster of %i x %i" % (nx, ny))
+        log.info("read raster of {0} x {1}".format(nx, ny))
 
     def vectorize_isobands(self, levels):
         """ Vectorization of isobands.
@@ -125,7 +125,7 @@ class Pygonize:
         x, y = numpy.meshgrid(self.lx, self.ly)
         
         # Split dataset into squares and vectorize
-        log.info("starting isoband vectorization with levels %s..." % levels)
+        log.info("starting isoband vectorization with levels {0}...".format(levels))
         for iy in range(ny - 1):
             for ix in range(nx - 1):
                 part_z = self.z[iy:iy+2, ix:ix+2]

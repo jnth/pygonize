@@ -64,7 +64,7 @@ def isoband_on_edge(p1, p2, mn, mx):
     """
     idx1 = get_idx_isoband(p1.z, mn, mx)
     idx2 = get_idx_isoband(p2.z, mn, mx)
-    idx = "{}{}".format(idx1, idx2)
+    idx = "{0}{1}".format(idx1, idx2)
     
     if idx == '00' or idx == '22':
         return []

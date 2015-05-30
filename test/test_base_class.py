@@ -11,7 +11,7 @@ import shapefile
 try:
     import matplotlib.pyplot as plt
     import matplotlib.patches as mpatches
-except:
+except ImportError:
     pass
 
 
@@ -110,15 +110,17 @@ class PygonizeTest(unittest.TestCase):
         v2 = open(fn, 'rb').read().strip().replace('\r', '')
         self.assertEqual(v1, v2)
 
-    def valid_with_fig(self, polys, **kwargs):
+    @staticmethod
+    def valid_with_fig(polys, **kwargs):
         """ Create figure to a visual validation of polygons
         :param polys: list of polygons.
         :param kwargs: options.
         """
         ppolys(polys)  # print coordinate
         figpolys(polys, **kwargs)  # show figure
-        
-    def valid_with_gis(self, polys, fno):
+    
+    @staticmethod    
+    def valid_with_gis(polys, fno):
         """ Create shapefile from polygons to validate with a GIS software.
         :param polys: list of polygons.
         """
