@@ -21,7 +21,7 @@ Create virtual environnement :
     $ virtualenv env
     $ source env/bin/activate
 
-Install dependencies `numpy`, `shapely` and `pyshp` :
+Install dependencies :
 
     $ pip install -r requirements.txt
 
