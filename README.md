@@ -21,24 +21,17 @@ Create virtual environnement :
 
 Install dependencies `numpy`, `shapely` and `pyshp` :
 
-    $ pip install numpy shapely pyshp
+    $ pip install -r requirements.txt
 
-Install GDAL from source or from your distribution.  
-__The version of the Python bindings must match the GDAL library version.__
+For `GDAL` library, the version of the Python bindings must match the GDAL library version.
 (source [Andreas Hilboll])  
-`gdal-config` is used to view the installed GDAL version :
+Use `gdal-config` to view the installed GDAL version :
 
     $ gdal-config --version
 
 Install the GDAL Python bindings (update the version number below) :
 
     $ pip install GDAL==1.8.1
-
-Check your GDAL installation :
-
-    $ python -c "from osgeo import gdal"
-
-This command must return nothing.
 
 Install of `pygonize` :
 
