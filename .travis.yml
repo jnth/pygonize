@@ -9,6 +9,11 @@ before_install:
   - sudo dpkg -i gdal-1.11.2.deb geos-3.4.2.deb
   - export PATH=/opt/gdal-1.11.2/bin:/opt/geos-3.4.2/bin:$PATH
   - export LD_LIBRARY_PATH=/opt/gdal-1.11.2/lib:/opt/geos-3.4.2/lib
+  - REQ=~/jnth/pygonize/requirements.txt
+  - pip install $( grep -i numpy $REQ )
+  - pip install $( grep -i shapely $REQ )
+  - pip install $( grep -i pyshp $REQ )
+  - pip install GDAL==$( gdal-config --version )  # use the same version
 
 install:
   - python setup.py install
