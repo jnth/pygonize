@@ -5,6 +5,8 @@ It's depend of `shapely`, `numpy`, `pyshp` and `GDAL` libraries.
 
 This script is under development...
 
+[![Build Status](https://travis-ci.org/jnth/pygonize.svg?branch=master)](https://travis-ci.org/jnth/pygonize)
+
 
 
 ## Install
