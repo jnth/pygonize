@@ -13,5 +13,5 @@ setup(name='pygonize',
       author='jnth',
       author_email='jonathan.virga@gmail.com',
       packages=['pygonize'],
-      install_requires=['numpy', 'shapely', 'gdal', 'pyshp']
+      install_requires=['numpy>=1.6.1', 'shapely>=1.3.0', 'gdal>=1.10.0', 'pyshp>=1.1.4']
       )
