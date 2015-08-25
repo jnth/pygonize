@@ -27,6 +27,7 @@ def prettify(val, ndigits=2):
         return int(val)
     return round(val, ndigits=ndigits)
 
+
 def ppolys(polys, output='stdout'):
     """ Print poly coordinates
     :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon object.

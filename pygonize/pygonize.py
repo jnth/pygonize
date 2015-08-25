@@ -7,7 +7,6 @@
 import math
 import multiprocessing
 import marchingsquares
-import interp
 import numpy
 from osgeo import gdal
 from shapely.geometry import Point
