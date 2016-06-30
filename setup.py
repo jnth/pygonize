@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Pygonize: polygonize raster data into isoband vector. """
+"""Pygonize: polygonize raster data into isoband vector."""
 
 
 from setuptools import setup

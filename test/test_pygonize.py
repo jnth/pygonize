@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Test. """
+"""Test."""
 
 from __future__ import print_function, division
 import sys
@@ -141,11 +141,11 @@ class TestPygonize(PygonizeTest):
         # Load files
         f1 = shapefile.Reader('test/data/isoband_from_raster_1.shp')
         f2 = shapefile.Reader(t)
-        
+
         # Compare records
         self.assertEqual(f1.fields, f2.fields)
         self.assertEqual(f1.records(), f2.records())
-        
+
         # Compare geometries
         s1, s2 = f1.shapes(), f2.shapes()
         self.assertEqual(f1.bbox, f2.bbox)

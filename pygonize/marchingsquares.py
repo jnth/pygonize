@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Marching squares algorithm. """
+"""Marching squares algorithm."""
 
 from __future__ import print_function, division
 import numpy
@@ -10,20 +10,21 @@ from .interp import interpolate
 
 
 class Isoband(Polygon):
-    """ Add methods and properties of shapely Polygon. """
+    """Add methods and properties of shapely Polygon."""
+
     @property
     def z_min(self):
-        """ Get minimal Z value of exterior ring. """
+        """Get minimal Z value of exterior ring."""
         return min([pts[2] for pts in list(self.exterior.coords)])
 
     @property
     def z_max(self):
-        """ Get maximal Z value of exterior ring. """
+        """Get maximal Z value of exterior ring."""
         return max([pts[2] for pts in list(self.exterior.coords)])
 
 
 def remove_duplicate_point(lp):
-    """ Remove duplicate point.
+    """Remove duplicate point.
 
     :param lp: list of points (shapely's PointZ object).
     :return: list of points (shapely's PointZ object).
@@ -37,7 +38,7 @@ def remove_duplicate_point(lp):
 
 
 def get_idx_isoline(v, i):
-    """ Index of marching square algorithm for an isoline.
+    """Index of marching square algorithm for an isoline.
 
     :param v: value for comparison.
     :param i: isoline value.
@@ -49,7 +50,7 @@ def get_idx_isoline(v, i):
 
 
 def get_idx_isoband(v, mn, mx):
-    """ Index of marching square algorithm for an isoband.
+    """Index of marching square algorithm for an isoband.
 
     :param v: value for comparison.
     :param mn: minimum value of an isoband.
@@ -67,7 +68,7 @@ def get_idx_isoband(v, mn, mx):
 
 
 def isoband_on_edge(p1, p2, mn, mx):
-    """ Create 'isoband' points from two points.
+    """Create 'isoband' points from two points.
 
     :param p1: 1st point (shapely.geometry.Point).
     :param p2: 2nd point (shapely.geometry.Point).
@@ -105,7 +106,8 @@ def isoband_on_edge(p1, p2, mn, mx):
 
 
 def is_clockwise(p):
-    """ Check if the polygon vertices are clockwise.
+    """Check if the polygon vertices are clockwise.
+
     Source: http://stackoverflow.com/a/1165943
 
     :param p: geometry.shapely.Polygon object.
@@ -121,7 +123,7 @@ def is_clockwise(p):
 
 
 def make_polygon(*ps):
-    """ Create polygon from a list of points.
+    """Create polygon from a list of points.
 
     :param ps: list of shapely.geometry.Point
     :return: Isoband object
@@ -135,12 +137,16 @@ def make_polygon(*ps):
 
 
 class SquareError(Exception):
+    """Square Error."""
+
     pass
 
 
 class Square:
+    """Square."""
+
     def __init__(self, p1, p2, p3, p4):
-        """ Define a square with four points.
+        """Define a square with four points.
 
             p1 +-----+ p2
                |     |
@@ -169,7 +175,7 @@ class Square:
 
     @property
     def x(self):
-        """ Get the X coordinates.
+        """Get the X coordinates.
 
         :return: list.
         """
@@ -177,7 +183,7 @@ class Square:
 
     @property
     def y(self):
-        """ Get the Y coordinates.
+        """Get the Y coordinates.
 
         :return: list.
         """
@@ -185,7 +191,7 @@ class Square:
 
     @property
     def z(self):
-        """ Get the Z coordinates.
+        """Get the Z coordinates.
 
         :return:
         """
@@ -193,7 +199,7 @@ class Square:
 
     @property
     def edges(self):
-        """ Get the edge.
+        """Get the edge.
 
         :return: list of (pi, pe).
         """
@@ -201,7 +207,7 @@ class Square:
 
     @property
     def points(self):
-        """ Get the list of points.
+        """Get the list of points.
 
         :return: list of points.
         """
@@ -209,14 +215,14 @@ class Square:
 
     @property
     def centralmean(self):
-        """ Get the central data value (average of cornes).
+        """Get the central data value (average of cornes).
 
         :return: number.
         """
         return numpy.array(self.z).mean()
 
     def isoband_classif(self, lvlmn, lvlmx):
-        """ Calculating the ternary index of the square to find isoband.
+        """Calculating the ternary index of the square to find isoband.
 
         :param lvlmn: minimum of the isoband value.
         :param lvlmx: maximum of the isoband value.
@@ -228,7 +234,7 @@ class Square:
         return "".join([str(e) for e in idxp])
 
     def vectorize_isoband(self, lvlmn, lvlmx):
-        """ Vectorization of one isoband.
+        """Vectorization of one isoband.
 
         :param lvlmn: minimum of the isoband value.
         :param lvlmx: maximum of the isoband value.
@@ -298,7 +304,7 @@ class Square:
             return [poly] if poly else None
 
     def vectorize_isobands(self, levels):
-        """ Vectorization of isobands.
+        """Vectorization of isobands.
 
         :param levels: list of levels.
         :return: list of shapely.geometry.Polygon.

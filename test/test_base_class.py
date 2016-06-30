@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Test base class """
+"""Test base class."""
 
 
 import unittest
@@ -16,7 +16,8 @@ except ImportError:
 
 
 def prettify(val, ndigits=2):
-    """ Pretty number format
+    """Pretty number format.
+
     :param val:
     :param ndigits:
     :return:
@@ -29,7 +30,8 @@ def prettify(val, ndigits=2):
 
 
 def ppolys(polys, output='stdout'):
-    """ Print poly coordinates
+    """Print poly coordinates.
+
     :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon object.
     :param output: 'stdout' to print string, all other value to return string.
     :return: string.
@@ -46,6 +48,13 @@ def ppolys(polys, output='stdout'):
 
 
 def figpolys(polys, x=None, y=None, fno=None):
+    """Create figure with poygons.
+
+    :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon object.
+    :param x: list of X coordinates or None.
+    :param y: list of Y coordinates or None.
+    :param fn: path of figure to save figure into file or None.
+    """
     if not isinstance(polys, list):
         polys = [polys]
 
@@ -67,8 +76,11 @@ def figpolys(polys, x=None, y=None, fno=None):
 
 
 class PygonizeTest(unittest.TestCase):
+    """Test of Pygonize."""
+
     def valid_point(self, p, o):
-        """ Validate Point object.
+        """Validate Point object.
+
         :param p: shapely.geometry.Point object.
         :param o: tuple of (x, y, z) or Point object.
         """
@@ -80,7 +92,8 @@ class PygonizeTest(unittest.TestCase):
         self.assertAlmostEqual(p.z, o.z, delta=0.1)
 
     def valid_poly(self, p, coo):
-        """ Valid Polygon object (only the exterior ring).
+        """Valid Polygon object (only the exterior ring).
+
         :param p: shapely.geometry.Polygon object.
         :param coo: list of (x, y, z).
         """
@@ -94,7 +107,8 @@ class PygonizeTest(unittest.TestCase):
             self.assertAlmostEqual(z1, z2, delta=0.1, msg=msg)
 
     def valid_list(self, l1, l2):
-        """ Validate two list.
+        """Validate two list.
+
         :param l1: 1st list.
         :param l2: 2nd list.
         """
@@ -103,7 +117,8 @@ class PygonizeTest(unittest.TestCase):
             self.assertAlmostEqual(e1, e2, delta=0.1)
 
     def valid_with_file(self, polys, fn):
-        """ Valid Polygon object with file containing coords.
+        """Valid Polygon object with file containing coords.
+
         :param polys: list of polygons.
         :param fn: path of file.
         """
@@ -113,7 +128,8 @@ class PygonizeTest(unittest.TestCase):
 
     @staticmethod
     def valid_with_fig(polys, **kwargs):
-        """ Create figure to a visual validation of polygons
+        """Create figure to a visual validation of polygons.
+
         :param polys: list of polygons.
         :param kwargs: options.
         """
@@ -122,7 +138,8 @@ class PygonizeTest(unittest.TestCase):
 
     @staticmethod
     def valid_with_gis(polys, fno):
-        """ Create shapefile from polygons to validate with a GIS software.
+        """Create shapefile from polygons to validate with a GIS software.
+
         :param polys: list of polygons.
         """
         shp = shapefile.Writer(shapefile.POLYGON)

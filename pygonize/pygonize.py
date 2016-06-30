@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" Pygonize: polygonize raster data. """
+"""Pygonize: polygonize raster data."""
 
 
 import math
@@ -18,8 +18,7 @@ log = logging.getLogger(__name__)
 
 
 def vectorize_isoband_worker(wp1, wp2, wp3, wp4, wlevels):
-    """ Function to be used by the multiprocessing module.
-    """
+    """Function to be used by the multiprocessing module."""
     fsq = marchingsquares.Square(wp1, wp2, wp3, wp4)
     out = fsq.vectorize_isobands(wlevels)
     del fsq
@@ -27,7 +26,8 @@ def vectorize_isoband_worker(wp1, wp2, wp3, wp4, wlevels):
 
 
 def precision_and_scale(x):
-    """ Get precision and scale of a number.
+    """Get precision and scale of a number.
+
     Source: http://stackoverflow.com/a/3019027
 
     :param x: number.
@@ -48,7 +48,7 @@ def precision_and_scale(x):
 
 
 def limits(x, l):
-    """ Get limits of a value 'x' inside a list 'l'.
+    """Get limits of a value 'x' inside a list 'l'.
 
     :param x: value.
     :param l: list of values.
@@ -67,13 +67,17 @@ def limits(x, l):
 
 
 class Pygonize:
+    """Pygonize : polygonize raster data into polygons vector."""
+
     def __init__(self):
+        """Pygonize : polygonize raster data into polygons vector."""
         self.lx = None
         self.ly = None
         self.z = None
 
     def read_array(self, x, y, z):
-        """ Read data from numpy arrays.
+        """Read data from numpy arrays.
+
         :param x: X coordinates as 1 axis array.
         :param y: Y coordinates as 1 axis array.
         :param z: Z coordinates with (y, x) shape.
@@ -93,7 +97,8 @@ class Pygonize:
         log.debug("data value from {0:.2f} to {1:.2f}".format(z.min(), z.max()))
 
     def read_raster(self, fn, band=1):
-        """ Read raster data.
+        """Read raster data.
+
         :param fn: path of raster.
         :param band: band number.
         """
@@ -111,7 +116,7 @@ class Pygonize:
         log.debug("data value from {0:.2f} to {1:.2f}".format(self.z.min(), self.z.max()))
 
     def vectorize_isobands(self, levels):
-        """ Vectorization of isobands.
+        """Vectorization of isobands.
 
         :param levels: list of levels.
         :return: list of shapely.geometry.Polygon.
@@ -139,7 +144,8 @@ class Pygonize:
                 p3 = Point(part_x[1, 1], part_y[1, 1], part_z[1, 1])
                 p4 = Point(part_x[1, 0], part_y[1, 0], part_z[1, 0])
 
-                w = pool.apply_async(vectorize_isoband_worker, args=(p1, p2, p3, p4, levels))  # create task
+                # Create task
+                w = pool.apply_async(vectorize_isoband_worker, args=(p1, p2, p3, p4, levels))
                 outs.append(w)
 
         # Wait for all process to be terminated
@@ -157,7 +163,7 @@ class Pygonize:
         return polys
 
     def write_shapefile(self, levels, fn):
-        """ Vectorization of isobands and save result into shapefile.
+        """Vectorization of isobands and save result into shapefile.
 
         :param levels: list of levels.
         :param fn: path of shapefile.
