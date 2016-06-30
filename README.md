@@ -3,7 +3,7 @@
 Polygonize raster data into polygons vector.  
 It's depend of `shapely`, `numpy`, `pyshp` and `GDAL` libraries.  
 
-This script is under development...
+This script is under development and work with Python 2.7, 3.4 and 3.5.
 
 [![Build Status](https://travis-ci.org/jnth/pygonize.svg?branch=master)](https://travis-ci.org/jnth/pygonize)
 
