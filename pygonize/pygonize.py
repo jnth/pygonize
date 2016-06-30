@@ -6,7 +6,7 @@
 
 import math
 import multiprocessing
-import marchingsquares
+from . import marchingsquares
 import numpy
 from osgeo import gdal
 from shapely.geometry import Point
@@ -87,7 +87,7 @@ class Pygonize:
         self.lx = x
         self.ly = y
         self.z = z
-        
+
         # Log
         log.info("read array of {0} x {1}".format(len(x), len(y)))
         log.debug("data value from {0:.2f} to {1:.2f}".format(z.min(), z.max()))
@@ -105,7 +105,7 @@ class Pygonize:
         ny, nx = self.z.shape
         self.lx = numpy.arange(xmin + dx / 2, xmin + nx * dx, dx)
         self.ly = numpy.arange(ymin + dy / 2, ymin + ny * dy, dy)
-        
+
         # Log
         log.info("read raster of {0} x {1}".format(nx, ny))
         log.debug("data value from {0:.2f} to {1:.2f}".format(self.z.min(), self.z.max()))
@@ -120,12 +120,12 @@ class Pygonize:
         log.debug("create pool of worker to vectorize data")
         pool = multiprocessing.Pool()  # start a pool of worker on the local machine
         outs = list()  # list of multiprocessing.pool.AsyncResult
-        
+
         ny, nx = self.z.shape
 
         # Grid of X and Y
         x, y = numpy.meshgrid(self.lx, self.ly)
-        
+
         # Split dataset into squares and vectorize
         log.info("starting isoband vectorization with levels {0}...".format(levels))
         for iy in range(ny - 1):
@@ -141,17 +141,17 @@ class Pygonize:
 
                 w = pool.apply_async(vectorize_isoband_worker, args=(p1, p2, p3, p4, levels))  # create task
                 outs.append(w)
-                
+
         # Wait for all process to be terminated
         log.debug("create {n} tasks".format(n=len(outs)))
         pool.close()
         pool.join()
-        
+
         # Join all resulting polygons
         polys = list()
         for w in outs:
             polys += w.get()
-        
+
         log.info("isoband vectorization done.")
         log.debug(" -> {n} polygons".format(n=len(polys)))
         return polys
@@ -195,4 +195,3 @@ class Pygonize:
 
         w.save(fn)
         log.info("writing isobands into shapefile done.")
-

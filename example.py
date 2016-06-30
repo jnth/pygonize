@@ -2,8 +2,8 @@
 # coding: utf-8
 
 import pygonize
-print pygonize.__version__
-print pygonize.__file__
+print(pygonize.__version__)
+print(pygonize.__file__)
 
 # To get logging message...
 import logging

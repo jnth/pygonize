@@ -1,7 +1,5 @@
 # TODOs
 
- * Compatibility with Python 3.x.
-
  * Better documentation.
 
  * Better setup.py with test inside.

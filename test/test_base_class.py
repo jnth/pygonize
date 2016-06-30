@@ -108,7 +108,7 @@ class PygonizeTest(unittest.TestCase):
         :param fn: path of file.
         """
         v1 = ppolys(polys, output='').strip().replace('\r', '')
-        v2 = open(fn, 'rb').read().strip().replace('\r', '')
+        v2 = open(fn, 'r').read().strip().replace('\r', '')
         self.assertEqual(v1, v2)
 
     @staticmethod
@@ -119,8 +119,8 @@ class PygonizeTest(unittest.TestCase):
         """
         ppolys(polys)  # print coordinate
         figpolys(polys, **kwargs)  # show figure
-    
-    @staticmethod    
+
+    @staticmethod
     def valid_with_gis(polys, fno):
         """ Create shapefile from polygons to validate with a GIS software.
         :param polys: list of polygons.
