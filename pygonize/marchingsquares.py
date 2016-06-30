@@ -9,6 +9,19 @@ from shapely.geometry import Point, Polygon
 from interp import interpolate
 
 
+class Isoband(Polygon):
+    """ Add methods and properties of shapely Polygon. """
+    @property
+    def z_min(self):
+        """ Get minimal Z value of exterior ring. """
+        return min([pts[2] for pts in list(self.exterior.coords)])
+
+    @property
+    def z_max(self):
+        """ Get maximal Z value of exterior ring. """
+        return max([pts[2] for pts in list(self.exterior.coords)])
+
+
 def remove_duplicate_point(lp):
     """ Remove duplicate point.
 
@@ -111,13 +124,13 @@ def make_polygon(*ps):
     """ Create polygon from a list of points.
 
     :param ps: list of shapely.geometry.Point
-    :return: shapely.geometry.Polygon
+    :return: Isoband object
     """
     if len(ps) < 3:
         return None
-    p = Polygon([e.coords[:][0] for e in ps])
+    p = Isoband([e.coords[:][0] for e in ps])
     if not is_clockwise(p):
-        p = Polygon(p.exterior.coords[::-1])
+        p = Isoband(p.exterior.coords[::-1])
     return p
 
 
