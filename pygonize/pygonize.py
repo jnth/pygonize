@@ -90,6 +90,7 @@ class Pygonize:
         
         # Log
         log.info("read array of {0} x {1}".format(len(x), len(y)))
+        log.debug("data value from {0:.2f} to {1:.2f}".format(z.min(), z.max()))
 
     def read_raster(self, fn, band=1):
         """ Read raster data.
@@ -107,6 +108,7 @@ class Pygonize:
         
         # Log
         log.info("read raster of {0} x {1}".format(nx, ny))
+        log.debug("data value from {0:.2f} to {1:.2f}".format(self.z.min(), self.z.max()))
 
     def vectorize_isobands(self, levels):
         """ Vectorization of isobands.
@@ -115,6 +117,7 @@ class Pygonize:
         :return: list of shapely.geometry.Polygon.
         """
         levels = sorted(levels)
+        log.debug("create pool of worker to vectorize data")
         pool = multiprocessing.Pool()  # start a pool of worker on the local machine
         outs = list()  # list of multiprocessing.pool.AsyncResult
         
@@ -140,6 +143,7 @@ class Pygonize:
                 outs.append(w)
                 
         # Wait for all process to be terminated
+        log.debug("create {n} tasks".format(n=len(outs)))
         pool.close()
         pool.join()
         
@@ -149,6 +153,7 @@ class Pygonize:
             polys += w.get()
         
         log.info("isoband vectorization done.")
+        log.debug(" -> {n} polygons".format(n=len(polys)))
         return polys
 
     def write_shapefile(self, levels, fn):
