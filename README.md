@@ -1,7 +1,7 @@
 # pygonize
 
 Polygonize raster data into polygons vector.  
-It's depend of `shapely`, `numpy`, `pyshp` and `GDAL` libraries.  
+It's depend of `shapely`, `numpy`, `pyshp` and `rasterio` libraries.  
 
 This script is under development and work with Python 3.5 and 3.6.
 
@@ -55,10 +55,3 @@ Install dependencies :
 
 See [TODO.md](TODO.md) for details.
 
-
-
-
-
-
-
-[Andreas Hilboll]: http://www.iup.uni-bremen.de/~hilboll/blog/2013/2013-10_installing-gdal-in-a-virtualenv.html
