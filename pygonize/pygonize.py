@@ -100,10 +100,10 @@ class Pygonize:
         """Read raster data.
 
         :param fn: path of raster.
-        :param band: band number.
+        :param band: band number (from 1 to ...).
         """
         with rasterio.open(fn) as rst:
-            self.z = rst.read()[0, :, :]
+            self.z = rst.read()[band - 1, :, :]
             xmin, dx, _, ymin, _, dy = rst.get_transform()  # geographic info
 
         ny, nx = self.z.shape
