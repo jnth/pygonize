@@ -5,16 +5,14 @@ python:
   - "3.6"
 
 before_install:
-  - wget https://www.dropbox.com/s/g8am0qboejmi006/gdal-1.11.2.deb
   - wget https://www.dropbox.com/s/75s2sv29lx3ra1t/geos-3.4.2.deb
-  - sudo dpkg -i gdal-1.11.2.deb geos-3.4.2.deb
-  - export PATH=/opt/gdal-1.11.2/bin:/opt/geos-3.4.2/bin:$PATH
-  - export LD_LIBRARY_PATH=/opt/gdal-1.11.2/lib:/opt/geos-3.4.2/lib
+  - sudo dpkg -i geos-3.4.2.deb
+  - export PATH=/opt/geos-3.4.2/bin:$PATH
+  - export LD_LIBRARY_PATH=/opt/geos-3.4.2/lib
   - REQ=requirements.txt
-  - pip install $( grep -i numpy $REQ )
-  - pip install $( grep -i shapely $REQ )
-  - pip install $( grep -i pyshp $REQ )
-  - pip install GDAL==$( gdal-config --version )  # use the same version
+  - pip install -U wheel
+  - pip install -r $REQ
+
 
 install:
   - python setup.py install

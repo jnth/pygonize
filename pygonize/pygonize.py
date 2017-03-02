@@ -8,7 +8,7 @@ import math
 import multiprocessing
 from . import marchingsquares
 import numpy
-from osgeo import gdal
+import rasterio
 from shapely.geometry import Point
 import shapefile
 import logging
@@ -102,11 +102,9 @@ class Pygonize:
         :param fn: path of raster.
         :param band: band number.
         """
-        dst = gdal.Open(fn)
-        self.z = dst.GetRasterBand(band).ReadAsArray()
-        xmin, dx, _, ymin, _, dy = dst.GetGeoTransform()  # geographic info
-        dst = None  # close dataset
-        del dst
+        with rasterio.open(fn) as rst:
+            self.z = rst.read()[0, :, :]
+            xmin, dx, _, ymin, _, dy = rst.get_transform()  # geographic info
 
         ny, nx = self.z.shape
         self.lx = numpy.arange(xmin + dx / 2, xmin + nx * dx, dx)
