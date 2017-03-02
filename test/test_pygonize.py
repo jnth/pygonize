@@ -3,8 +3,8 @@
 
 """Test."""
 
-
 import sys
+
 sys.path.append('../pygonize')
 import tempfile
 import unittest
@@ -264,20 +264,25 @@ class TestPygonize(PygonizeTest):
         p.write_shapefile([200, 250, 300, 350, 400, 450, 500], t)
 
         # Load files
-        f1 = shapefile.Reader('test/data/isoband_from_raster_1.shp')
-        f2 = shapefile.Reader(t)
+        with open('test/data/isoband_from_raster_1.shp', 'rb') as fshp1, \
+                open('test/data/isoband_from_raster_1.dbf', 'rb') as fdbf1, \
+                open('{}.shp'.format(t), 'rb') as fshp2, \
+                open('{}.dbf'.format(t), 'rb') as fdbf2:
 
-        # Compare records
-        self.assertEqual(f1.fields, f2.fields)
-        self.assertEqual(f1.records(), f2.records())
+            f1 = shapefile.Reader(shp=fshp1, dbf=fdbf1)
+            f2 = shapefile.Reader(shp=fshp2, dbf=fdbf2)
 
-        # Compare geometries
-        s1, s2 = f1.shapes(), f2.shapes()
-        self.assertEqual(f1.bbox, f2.bbox)
-        self.assertEqual(len(s1), len(s2))
-        for i in range(len(s1)):
-            self.assertEqual(s1[i].bbox, s2[i].bbox)
-            self.assertEqual(s1[i].points, s2[i].points)
+            # Compare records
+            self.assertEqual(f1.fields, f2.fields)
+            self.assertEqual(f1.records(), f2.records())
+
+            # Compare geometries
+            s1, s2 = f1.shapes(), f2.shapes()
+            self.assertEqual(f1.bbox, f2.bbox)
+            self.assertEqual(len(s1), len(s2))
+            for i in range(len(s1)):
+                self.assertEqual(s1[i].bbox, s2[i].bbox)
+                self.assertEqual(s1[i].points, s2[i].points)
 
 
 if __name__ == '__main__':

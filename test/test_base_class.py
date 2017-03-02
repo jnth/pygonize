@@ -125,8 +125,9 @@ class PygonizeTest(unittest.TestCase):
         :param polys: list of polygons.
         :param fn: path of file.
         """
-        v1 = ppolys(polys, output='').strip().replace('\r', '')
-        v2 = open(fn, 'r').read().strip().replace('\r', '')
+        with open(fn, 'r') as f:
+            v1 = ppolys(polys, output='').strip().replace('\r', '')
+            v2 = f.read().strip().replace('\r', '')
         self.assertEqual(v1, v2)
 
     @staticmethod
