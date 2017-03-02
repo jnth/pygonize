@@ -1,9 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# coding: utf-8
 
 """Marching squares algorithm."""
 
-from __future__ import print_function, division
+
 import numpy
 from shapely.geometry import Point, Polygon
 from .interp import interpolate
@@ -11,6 +11,10 @@ from .interp import interpolate
 
 class Isoband(Polygon):
     """Add methods and properties of shapely Polygon."""
+
+    def __init__(self, *args, **kwargs):
+        """Isoband."""
+        super().__init__(*args, **kwargs)
 
     @property
     def z_min(self):
@@ -153,10 +157,10 @@ class Square:
                |     |
             p4 +-----+ p3
 
-        :param p1: upper-left point (shapely.geometry.Point object in 3 dimensions).
-        :param p2: upper-right point (shapely.geometry.Point object in 3 dimensions).
-        :param p3: lower-right point (shapely.geometry.Point object in 3 dimensions).
-        :param p4: lower-left point (shapely.geometry.Point object in 3 dimensions).
+        :param p1: upper-left point (shapely.geometry.Point object in 3d).
+        :param p2: upper-right point (shapely.geometry.Point object in 3d).
+        :param p3: lower-right point (shapely.geometry.Point object in 3d).
+        :param p4: lower-left point (shapely.geometry.Point object in 3d).
         :return:
         """
         if not p1.has_z:
@@ -203,7 +207,8 @@ class Square:
 
         :return: list of (pi, pe).
         """
-        return [self.p1, self.p2], [self.p2, self.p3], [self.p3, self.p4], [self.p4, self.p1]
+        return [self.p1, self.p2], [self.p2, self.p3], [self.p3, self.p4], \
+               [self.p4, self.p1]
 
     @property
     def points(self):
@@ -251,53 +256,74 @@ class Square:
         ps = remove_duplicate_point(ps)
 
         # Create polygons
-        if idx == '0101' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 6-sided
+
+        # saddles case, 6-sided
+        if idx == '0101' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:3]), make_polygon(*ps[3:6])]
 
-        elif idx == '1010' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 6-sided
+        # saddles case, 6-sided
+        elif idx == '1010' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(ps[0], ps[1], ps[5]), make_polygon(*ps[2:5])]
 
-        elif idx == '2121' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 6-sided
+        # saddles case, 6-sided
+        elif idx == '2121' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:3]), make_polygon(*ps[3:6])]
 
-        elif idx == '1212' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 6-sided
+        # saddles case, 6-sided
+        elif idx == '1212' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(ps[0], ps[1], ps[5]), make_polygon(*ps[2:5])]
 
-        elif idx == '2120' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '2120' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:3]), make_polygon(*ps[3:7])]
 
-        elif idx == '2021' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '2021' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:4]), make_polygon(*ps[4:7])]
 
-        elif idx == '1202' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '1202' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(ps[0], ps[1], ps[6]), make_polygon(*ps[2:6])]
 
-        elif idx == '0212' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
-            return [make_polygon(ps[0], ps[1], ps[5], ps[6]), make_polygon(*ps[2:5])]
+        # saddles case, 7-sided
+        elif idx == '0212' and not lvlmn <= self.centralmean <= lvlmx:
+            return [make_polygon(ps[0], ps[1], ps[5], ps[6]),
+                    make_polygon(*ps[2:5])]
 
-        elif idx == '0102' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '0102' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:3]), make_polygon(*ps[3:7])]
 
-        elif idx == '0201' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '0201' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(*ps[0:4]), make_polygon(*ps[4:7])]
 
-        elif idx == '1020' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
+        # saddles case, 7-sided
+        elif idx == '1020' and not lvlmn <= self.centralmean <= lvlmx:
             return [make_polygon(ps[0], ps[1], ps[6]), make_polygon(*ps[2:6])]
 
-        elif idx == '2010' and not lvlmn <= self.centralmean <= lvlmx:  # saddles case, 7-sided
-            return [make_polygon(ps[0], ps[1], ps[5], ps[6]), make_polygon(*ps[2:5])]
+        # saddles case, 7-sided
+        elif idx == '2010' and not lvlmn <= self.centralmean <= lvlmx:
+            return [make_polygon(ps[0], ps[1], ps[5], ps[6]),
+                    make_polygon(*ps[2:5])]
 
-        elif idx == '2020' and self.centralmean < lvlmn:  # saddles case, 8-sided
-            return [make_polygon(ps[0], ps[1], ps[6], ps[7]), make_polygon(*ps[2:6])]
+        # saddles case, 8-sided
+        elif idx == '2020' and self.centralmean < lvlmn:
+            return [make_polygon(ps[0], ps[1], ps[6], ps[7]),
+                    make_polygon(*ps[2:6])]
 
-        elif idx == '2020' and self.centralmean > lvlmx:  # saddles case, 8-sided
+        # saddles case, 8-sided
+        elif idx == '2020' and self.centralmean > lvlmx:
             return [make_polygon(*ps[0:4]), make_polygon(*ps[4:8])]
 
-        elif idx == '0202' and self.centralmean < lvlmn:  # saddles case, 8-sided
+        # saddles case, 8-sided
+        elif idx == '0202' and self.centralmean < lvlmn:
             return [make_polygon(*ps[0:4]), make_polygon(*ps[4:8])]
 
-        elif idx == '0202' and self.centralmean > lvlmx:  # saddles case, 8-sided
-            return [make_polygon(ps[0], ps[1], ps[6], ps[7]), make_polygon(*ps[2:6])]
+        # saddles case, 8-sided
+        elif idx == '0202' and self.centralmean > lvlmx:
+            return [make_polygon(ps[0], ps[1], ps[6], ps[7]),
+                    make_polygon(*ps[2:6])]
 
         else:  # regular case
             poly = make_polygon(*ps)

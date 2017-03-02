@@ -3,7 +3,7 @@
 Polygonize raster data into polygons vector.  
 It's depend of `shapely`, `numpy`, `pyshp` and `GDAL` libraries.  
 
-This script is under development and work with Python 2.7, 3.4 and 3.5.
+This script is under development and work with Python 3.5 and 3.6.
 
 [![Build Status](https://travis-ci.org/jnth/pygonize.svg?branch=master)](https://travis-ci.org/jnth/pygonize)
 
@@ -18,26 +18,12 @@ Clone this repository :
 
 Create virtual environnement :
 
-    $ virtualenv env
+    $ python3.6 -m pyvenv env
     $ source env/bin/activate
 
 Install dependencies :
 
     $ pip install -r requirements.txt
-
-For `GDAL` library, the version of the Python bindings must match the GDAL library version.
-(source [Andreas Hilboll])  
-Use `gdal-config` to view the installed GDAL version :
-
-    $ gdal-config --version
-
-Install the GDAL Python bindings (update the version number below) :
-
-    $ pip install GDAL==1.8.1
-
-Install of `pygonize` :
-
-    $ python setup.py install
 
 
 

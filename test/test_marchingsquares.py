@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# coding: utf-8
 
 """Test of Marchings Square algorithm."""
 
-from __future__ import print_function, division
 import sys
 sys.path.append('../pygonize')
 import unittest
@@ -58,9 +57,11 @@ class TestBaseFunctions(PygonizeTest):
         """Test of ``interpolate``."""
         self.valid_point(interp.interpolate(self.p1, self.p2, 40), (6, 11, 40))
         self.valid_point(interp.interpolate(self.p1, self.p2, 45), (4, 11, 45))
-        self.valid_point(interp.interpolate(self.p1, self.p2, 46), (3.6, 11, 46))
+        self.valid_point(interp.interpolate(self.p1, self.p2, 46),
+                         (3.6, 11, 46))
         self.valid_point(interp.interpolate(self.p1, self.p2, 50), (2, 11, 50))
-        self.valid_point(interp.interpolate(self.p2, self.p1, 46), (3.6, 11, 46))
+        self.valid_point(interp.interpolate(self.p2, self.p1, 46),
+                         (3.6, 11, 46))
         self.assertIsNone(interp.interpolate(self.p1, self.p2, 35))
         self.assertIsNone(interp.interpolate(self.p1, self.p2, 55))
 
@@ -178,14 +179,17 @@ class TestMarchingSquares(PygonizeTest):
         self.assertIsNone(marchingsquares.make_polygon(self.p1, self.p2))
 
         poly = marchingsquares.make_polygon(self.p1, self.p2, self.p3)
-        self.valid_poly(poly, [[10, 12, 15], [12, 14, 20], [15, 14, 18], [10, 12, 15]])
+        self.valid_poly(poly, [[10, 12, 15], [12, 14, 20], [15, 14, 18],
+                               [10, 12, 15]])
 
         poly = marchingsquares.make_polygon(self.p4, self.p3, self.p2)
-        self.valid_poly(poly, [[11, 15, 29], [15, 14, 18], [12, 14, 20], [11, 15, 29]])
+        self.valid_poly(poly, [[11, 15, 29], [15, 14, 18], [12, 14, 20],
+                               [11, 15, 29]])
 
         poly = marchingsquares.make_polygon(self.p1, self.p4, self.p3, self.p2)
-        self.valid_poly(poly, [[10, 12, 15], [11, 15, 29], [15, 14, 18], [12, 14, 20],
-                               [10, 12, 15]])
+        self.valid_poly(poly,
+                        [[10, 12, 15], [11, 15, 29], [15, 14, 18], [12, 14, 20],
+                         [10, 12, 15]])
 
 
 class TestVectorizeIsoband(PygonizeTest):
@@ -234,63 +238,78 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(30, 31, 32, 15, 10, 20)
         self.assertEqual(cl, '2221')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[12.94, 10, 20], [10, 10, 15], [10, 13.33, 20], [12.94, 10, 20]])
+        self.valid_poly(poly[0],
+                        [[12.94, 10, 20], [10, 10, 15], [10, 13.33, 20],
+                         [12.94, 10, 20]])
 
     def test_vectorize_2212(self):
         """Test the `2212` case."""
         cl, poly = self.init_point(30, 31, 15, 32, 10, 20)
         self.assertEqual(cl, '2212')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 13.13, 20], [20, 10, 15], [17.06, 10, 20], [20, 13.13, 20]])
+        self.valid_poly(poly[0],
+                        [[20, 13.13, 20], [20, 10, 15], [17.06, 10, 20],
+                         [20, 13.13, 20]])
 
     def test_vectorize_2122(self):
         """Test the `2122` case."""
         cl, poly = self.init_point(30, 15, 31, 32, 10, 20)
         self.assertEqual(cl, '2122')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[16.67, 20, 20], [20, 20, 15], [20, 16.88, 20], [16.67, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[16.67, 20, 20], [20, 20, 15], [20, 16.88, 20],
+                         [16.67, 20, 20]])
 
     def test_vectorize_1222(self):
         """Test the `1222` case."""
         cl, poly = self.init_point(15, 30, 31, 32, 10, 20)
         self.assertEqual(cl, '1222')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 15], [13.33, 20, 20], [10, 17.06, 20], [10, 20, 15]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 15], [13.33, 20, 20], [10, 17.06, 20],
+                         [10, 20, 15]])
 
     def test_vectorize_0001(self):
         """Test the `0001` case."""
         cl, poly = self.init_point(5, 6, 7, 15, 10, 20)
         self.assertEqual(cl, '0001')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[16.25, 10, 10], [10, 10, 15], [10, 15, 10], [16.25, 10, 10]])
+        self.valid_poly(poly[0], [[16.25, 10, 10], [10, 10, 15], [10, 15, 10],
+                                  [16.25, 10, 10]])
 
     def test_vectorize_0010(self):
         """Test the `0010` case."""
         cl, poly = self.init_point(5, 6, 15, 6, 10, 20)
         self.assertEqual(cl, '0010')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 15.56, 10], [20, 10, 15], [14.44, 10, 10], [20, 15.56, 10]])
+        self.valid_poly(poly[0],
+                        [[20, 15.56, 10], [20, 10, 15], [14.44, 10, 10],
+                         [20, 15.56, 10]])
 
     def test_vectorize_0100(self):
         """Test the `0100` case."""
         cl, poly = self.init_point(5, 15, 6, 6, 10, 20)
         self.assertEqual(cl, '0100')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[15, 20, 10], [20, 20, 15], [20, 14.44, 10], [15, 20, 10]])
+        self.valid_poly(poly[0], [[15, 20, 10], [20, 20, 15], [20, 14.44, 10],
+                                  [15, 20, 10]])
 
     def test_vectorize_1000(self):
         """Test the `1000` case."""
         cl, poly = self.init_point(15, 8, 6, 6, 10, 20)
         self.assertEqual(cl, '1000')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 15], [17.14, 20, 10], [10, 14.44, 10], [10, 20, 15]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 15], [17.14, 20, 10], [10, 14.44, 10],
+                         [10, 20, 15]])
 
     def test_vectorize_2220(self):
         """Test the `2220` case."""
         cl, poly = self.init_point(22, 24, 26, 6, 10, 20)
         self.assertEqual(cl, '2220')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[17, 10, 20], [12, 10, 10], [10, 12.5, 10], [10, 18.75, 20],
+        self.valid_poly(poly[0], [[17, 10, 20], [12, 10, 10], [10, 12.5, 10],
+                                  [10, 18.75, 20],
                                   [17, 10, 20]])
 
     def test_vectorize_2202(self):
@@ -298,23 +317,27 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(22, 24, 6, 26, 10, 20)
         self.assertEqual(cl, '2202')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 17.78, 20], [20, 12.22, 10], [18, 10, 10], [13, 10, 20],
-                                  [20, 17.78, 20]])
+        self.valid_poly(poly[0],
+                        [[20, 17.78, 20], [20, 12.22, 10], [18, 10, 10],
+                         [13, 10, 20],
+                         [20, 17.78, 20]])
 
     def test_vectorize_2022(self):
         """Test the `2022` case."""
         cl, poly = self.init_point(22, 6, 24, 26, 10, 20)
         self.assertEqual(cl, '2022')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[11.25, 20, 20], [17.5, 20, 10], [20, 17.78, 10],
-                                  [20, 12.22, 20], [11.25, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[11.25, 20, 20], [17.5, 20, 10], [20, 17.78, 10],
+                         [20, 12.22, 20], [11.25, 20, 20]])
 
     def test_vectorize_0222(self):
         """Test the `0222` case."""
         cl, poly = self.init_point(6, 22, 24, 26, 10, 20)
         self.assertEqual(cl, '0222')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[12.5, 20, 10], [18.75, 20, 20], [10, 13, 20], [10, 18, 10],
+        self.valid_poly(poly[0], [[12.5, 20, 10], [18.75, 20, 20], [10, 13, 20],
+                                  [10, 18, 10],
                                   [12.5, 20, 10]])
 
     def test_vectorize_0002(self):
@@ -322,23 +345,27 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(6, 8, 4, 26, 10, 20)
         self.assertEqual(cl, '0002')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[17.27, 10, 10], [12.73, 10, 20], [10, 13, 20], [10, 18, 10],
-                                  [17.27, 10, 10]])
+        self.valid_poly(poly[0],
+                        [[17.27, 10, 10], [12.73, 10, 20], [10, 13, 20],
+                         [10, 18, 10],
+                         [17.27, 10, 10]])
 
     def test_vectorize_0020(self):
         """Test the `0020` case."""
         cl, poly = self.init_point(6, 8, 26, 4, 10, 20)
         self.assertEqual(cl, '0020')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 18.89, 10], [20, 13.33, 20], [17.27, 10, 20],
-                                  [12.73, 10, 10], [20, 18.89, 10]])
+        self.valid_poly(poly[0],
+                        [[20, 18.89, 10], [20, 13.33, 20], [17.27, 10, 20],
+                         [12.73, 10, 10], [20, 18.89, 10]])
 
     def test_vectorize_0200(self):
         """Test the `0200` case."""
         cl, poly = self.init_point(6, 26, 8, 4, 10, 20)
         self.assertEqual(cl, '0200')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[12, 20, 10], [17, 20, 20], [20, 16.67, 20], [20, 11.11, 10],
+        self.valid_poly(poly[0], [[12, 20, 10], [17, 20, 20], [20, 16.67, 20],
+                                  [20, 11.11, 10],
                                   [12, 20, 10]])
 
     def test_vectorize_2000(self):
@@ -346,7 +373,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(26, 6, 8, 4, 10, 20)
         self.assertEqual(cl, '2000')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13, 20, 20], [18, 20, 10], [10, 12.73, 10], [10, 17.27, 20],
+        self.valid_poly(poly[0], [[13, 20, 20], [18, 20, 10], [10, 12.73, 10],
+                                  [10, 17.27, 20],
                                   [13, 20, 20]])
 
     def test_vectorize_1111(self):
@@ -354,15 +382,17 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 16, 18, 14, 10, 20)
         self.assertEqual(cl, '1111')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [20, 20, 16], [20, 10, 18], [10, 10, 14],
-                                  [10, 20, 12]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 12], [20, 20, 16], [20, 10, 18], [10, 10, 14],
+                         [10, 20, 12]])
 
     def test_vectorize_0011(self):
         """Test the `0011` case."""
         cl, poly = self.init_point(2, 6, 18, 14, 10, 20)
         self.assertEqual(cl, '0011')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 16.67, 10], [20, 10, 18], [10, 10, 14], [10, 13.33, 10],
+        self.valid_poly(poly[0], [[20, 16.67, 10], [20, 10, 18], [10, 10, 14],
+                                  [10, 13.33, 10],
                                   [20, 16.67, 10]])
 
     def test_vectorize_0110(self):
@@ -370,7 +400,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(2, 16, 18, 4, 10, 20)
         self.assertEqual(cl, '0110')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[15.71, 20, 10], [20, 20, 16], [20, 10, 18], [14.29, 10, 10],
+        self.valid_poly(poly[0], [[15.71, 20, 10], [20, 20, 16], [20, 10, 18],
+                                  [14.29, 10, 10],
                                   [15.71, 20, 10]])
 
     def test_vectorize_1100(self):
@@ -378,7 +409,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 16, 8, 4, 10, 20)
         self.assertEqual(cl, '1100')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [20, 20, 16], [20, 12.5, 10], [10, 17.5, 10],
+        self.valid_poly(poly[0], [[10, 20, 12], [20, 20, 16], [20, 12.5, 10],
+                                  [10, 17.5, 10],
                                   [10, 20, 12]])
 
     def test_vectorize_1001(self):
@@ -386,15 +418,18 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 6, 8, 14, 10, 20)
         self.assertEqual(cl, '1001')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [13.33, 20, 10], [16.67, 10, 10], [10, 10, 14],
-                                  [10, 20, 12]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 12], [13.33, 20, 10], [16.67, 10, 10],
+                         [10, 10, 14],
+                         [10, 20, 12]])
 
     def test_vectorize_2211(self):
         """Test the `2211` case."""
         cl, poly = self.init_point(22, 26, 18, 14, 10, 20)
         self.assertEqual(cl, '2211')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 12.5, 20], [20, 10, 18], [10, 10, 14], [10, 17.5, 20],
+        self.valid_poly(poly[0], [[20, 12.5, 20], [20, 10, 18], [10, 10, 14],
+                                  [10, 17.5, 20],
                                   [20, 12.5, 20]])
 
     def test_vectorize_2112(self):
@@ -402,7 +437,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(22, 16, 18, 24, 10, 20)
         self.assertEqual(cl, '2112')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 10, 18], [16.67, 10, 20],
+        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 10, 18],
+                                  [16.67, 10, 20],
                                   [13.33, 20, 20]])
 
     def test_vectorize_1122(self):
@@ -410,7 +446,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 16, 28, 24, 10, 20)
         self.assertEqual(cl, '1122')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [20, 20, 16], [20, 16.67, 20], [10, 13.33, 20],
+        self.valid_poly(poly[0], [[10, 20, 12], [20, 20, 16], [20, 16.67, 20],
+                                  [10, 13.33, 20],
                                   [10, 20, 12]])
 
     def test_vectorize_1221(self):
@@ -418,40 +455,48 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 26, 28, 14, 10, 20)
         self.assertEqual(cl, '1221')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [15.71, 20, 20], [14.29, 10, 20], [10, 10, 14],
-                                  [10, 20, 12]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 12], [15.71, 20, 20], [14.29, 10, 20],
+                         [10, 10, 14],
+                         [10, 20, 12]])
 
     def test_vectorize_2200(self):
         """Test the `2200` case."""
         cl, poly = self.init_point(22, 26, 8, 4, 10, 20)
         self.assertEqual(cl, '2200')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 16.67, 20], [20, 11.11, 10], [10, 13.33, 10],
-                                  [10, 18.89, 20], [20, 16.67, 20]])
+        self.valid_poly(poly[0],
+                        [[20, 16.67, 20], [20, 11.11, 10], [10, 13.33, 10],
+                         [10, 18.89, 20], [20, 16.67, 20]])
 
     def test_vectorize_2002(self):
         """Test the `2002` case."""
         cl, poly = self.init_point(22, 6, 8, 24, 10, 20)
         self.assertEqual(cl, '2002')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[11.25, 20, 20], [17.5, 20, 10], [18.75, 10, 10], [12.5, 10, 20],
-                                  [11.25, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[11.25, 20, 20], [17.5, 20, 10], [18.75, 10, 10],
+                         [12.5, 10, 20],
+                         [11.25, 20, 20]])
 
     def test_vectorize_0022(self):
         """Test the `0022` case."""
         cl, poly = self.init_point(2, 6, 28, 24, 10, 20)
         self.assertEqual(cl, '0022')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 18.18, 10], [20, 13.64, 20], [10, 11.82, 20],
-                                  [10, 16.36, 10], [20, 18.18, 10]])
+        self.valid_poly(poly[0],
+                        [[20, 18.18, 10], [20, 13.64, 20], [10, 11.82, 20],
+                         [10, 16.36, 10], [20, 18.18, 10]])
 
     def test_vectorize_0220(self):
         """Test the `0220` case."""
         cl, poly = self.init_point(2, 26, 28, 4, 10, 20)
         self.assertEqual(cl, '0220')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 10], [17.5, 20, 20], [16.67, 10, 20], [12.5, 10, 10],
-                                  [13.33, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[13.33, 20, 10], [17.5, 20, 20], [16.67, 10, 20],
+                         [12.5, 10, 10],
+                         [13.33, 20, 10]])
 
     def test_vectorize_0211(self):
         """Test the `0211` case."""
@@ -459,7 +504,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0211')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[13.33, 20, 10], [17.5, 20, 20], [20, 12.5, 20], [20, 10, 18],
+                        [[13.33, 20, 10], [17.5, 20, 20], [20, 12.5, 20],
+                         [20, 10, 18],
                          [10, 10, 14], [10, 13.33, 10], [13.33, 20, 10]])
 
     def test_vectorize_2110(self):
@@ -468,7 +514,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2110')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[13.33, 20, 20], [20, 20, 16], [20, 10, 18], [14.29, 10, 10],
+                        [[13.33, 20, 20], [20, 20, 16], [20, 10, 18],
+                         [14.29, 10, 10],
                          [10, 13.33, 10], [10, 18.89, 20], [13.33, 20, 20]])
 
     def test_vectorize_1102(self):
@@ -477,7 +524,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1102')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 12.5, 10], [18.75, 10, 10],
+                        [[10, 20, 12], [20, 20, 16], [20, 12.5, 10],
+                         [18.75, 10, 10],
                          [12.5, 10, 20], [10, 13.33, 20], [10, 20, 12]])
 
     def test_vectorize_1021(self):
@@ -486,7 +534,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1021')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [13.33, 20, 10], [20, 18.18, 10], [20, 13.64, 20],
+                        [[10, 20, 12], [13.33, 20, 10], [20, 18.18, 10],
+                         [20, 13.64, 20],
                          [14.29, 10, 20], [10, 10, 14], [10, 20, 12]])
 
     def test_vectorize_2011(self):
@@ -495,7 +544,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2011')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[11.25, 20, 20], [17.5, 20, 10], [20, 16.67, 10], [20, 10, 18],
+                        [[11.25, 20, 20], [17.5, 20, 10], [20, 16.67, 10],
+                         [20, 10, 18],
                          [10, 10, 14], [10, 17.5, 20], [11.25, 20, 20]])
 
     def test_vectorize_0112(self):
@@ -504,7 +554,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0112')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[15.71, 20, 10], [20, 20, 16], [20, 10, 18], [16.67, 10, 20],
+                        [[15.71, 20, 10], [20, 20, 16], [20, 10, 18],
+                         [16.67, 10, 20],
                          [10, 11.82, 20], [10, 16.36, 10], [15.71, 20, 10]])
 
     def test_vectorize_1120(self):
@@ -513,7 +564,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1120')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 16.67, 20], [16.67, 10, 20],
+                        [[10, 20, 12], [20, 20, 16], [20, 16.67, 20],
+                         [16.67, 10, 20],
                          [12.5, 10, 10], [10, 17.5, 10], [10, 20, 12]])
 
     def test_vectorize_1201(self):
@@ -522,7 +574,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1201')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15.71, 20, 20], [20, 16.67, 20], [20, 11.11, 10],
+                        [[10, 20, 12], [15.71, 20, 20], [20, 16.67, 20],
+                         [20, 11.11, 10],
                          [16.67, 10, 10], [10, 10, 14], [10, 20, 12]])
 
     def test_vectorize_2101(self):
@@ -531,7 +584,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2101')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10], [16.67, 10, 10],
+                        [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10],
+                         [16.67, 10, 10],
                          [10, 10, 14], [10, 17.5, 20], [13.33, 20, 20]])
 
     def test_vectorize_0121(self):
@@ -540,7 +594,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0121')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20], [14.29, 10, 20],
+                        [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20],
+                         [14.29, 10, 20],
                          [10, 10, 14], [10, 13.33, 10], [15.71, 20, 10]])
 
     def test_vectorize_1012(self):
@@ -549,7 +604,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1012')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [13.33, 20, 10], [20, 16.67, 10], [20, 10, 18],
+                        [[10, 20, 12], [13.33, 20, 10], [20, 16.67, 10],
+                         [20, 10, 18],
                          [16.67, 10, 20], [10, 13.33, 20], [10, 20, 12]])
 
     def test_vectorize_1210(self):
@@ -558,7 +614,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1210')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15.71, 20, 20], [20, 12.5, 20], [20, 10, 18],
+                        [[10, 20, 12], [15.71, 20, 20], [20, 12.5, 20],
+                         [20, 10, 18],
                          [14.29, 10, 10], [10, 17.5, 10], [10, 20, 12]])
 
     def test_vectorize_1211(self):
@@ -567,7 +624,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1211')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15.71, 20, 20], [20, 12.5, 20], [20, 10, 18],
+                        [[10, 20, 12], [15.71, 20, 20], [20, 12.5, 20],
+                         [20, 10, 18],
                          [10, 10, 14], [10, 20, 12]])
 
     def test_vectorize_2111(self):
@@ -576,7 +634,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2111')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[13.33, 20, 20], [20, 20, 16], [20, 10, 18], [10, 10, 14], [10, 17.5, 20],
+                        [[13.33, 20, 20], [20, 20, 16], [20, 10, 18],
+                         [10, 10, 14], [10, 17.5, 20],
                          [13.33, 20, 20]])
 
     def test_vectorize_1112(self):
@@ -585,7 +644,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1112')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 10, 18], [16.67, 10, 20],
+                        [[10, 20, 12], [20, 20, 16], [20, 10, 18],
+                         [16.67, 10, 20],
                          [10, 13.33, 20], [10, 20, 12]])
 
     def test_vectorize_1121(self):
@@ -594,7 +654,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1121')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 16.67, 20], [14.29, 10, 20],
+                        [[10, 20, 12], [20, 20, 16], [20, 16.67, 20],
+                         [14.29, 10, 20],
                          [10, 10, 14], [10, 20, 12]])
 
     def test_vectorize_1011(self):
@@ -603,7 +664,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1011')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [13.33, 20, 10], [20, 16.67, 10], [20, 10, 18],
+                        [[10, 20, 12], [13.33, 20, 10], [20, 16.67, 10],
+                         [20, 10, 18],
                          [10, 10, 14], [10, 20, 12]])
 
     def test_vectorize_0111(self):
@@ -612,7 +674,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0111')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[15.71, 20, 10], [20, 20, 16], [20, 10, 18], [10, 10, 14],
+                        [[15.71, 20, 10], [20, 20, 16], [20, 10, 18],
+                         [10, 10, 14],
                          [10, 13.33, 10], [15.71, 20, 10]])
 
     def test_vectorize_1110(self):
@@ -621,7 +684,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1110')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 10, 18], [14.29, 10, 10], [10, 17.5, 10],
+                        [[10, 20, 12], [20, 20, 16], [20, 10, 18],
+                         [14.29, 10, 10], [10, 17.5, 10],
                          [10, 20, 12]])
 
     def test_vectorize_1101(self):
@@ -630,7 +694,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1101')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [20, 20, 16], [20, 12.5, 10], [16.67, 10, 10], [10, 10, 14],
+                        [[10, 20, 12], [20, 20, 16], [20, 12.5, 10],
+                         [16.67, 10, 10], [10, 10, 14],
                          [10, 20, 12]])
 
     def test_vectorize_1200(self):
@@ -639,7 +704,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1200')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15.71, 20, 20], [20, 16.67, 20], [20, 11.11, 10],
+                        [[10, 20, 12], [15.71, 20, 20], [20, 16.67, 20],
+                         [20, 11.11, 10],
                          [10, 17.5, 10], [10, 20, 12]])
 
     def test_vectorize_0120(self):
@@ -647,39 +713,48 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(2, 16, 28, 4, 10, 20)
         self.assertEqual(cl, '0120')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20], [16.67, 10, 20],
-                                  [12.5, 10, 10], [15.71, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20],
+                         [16.67, 10, 20],
+                         [12.5, 10, 10], [15.71, 20, 10]])
 
     def test_vectorize_0012(self):
         """Test the `0012` case."""
         cl, poly = self.init_point(2, 6, 18, 24, 10, 20)
         self.assertEqual(cl, '0012')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 16.67, 10], [20, 10, 18], [16.67, 10, 20], [10, 11.82, 20],
-                                  [10, 16.36, 10], [20, 16.67, 10]])
+        self.valid_poly(poly[0],
+                        [[20, 16.67, 10], [20, 10, 18], [16.67, 10, 20],
+                         [10, 11.82, 20],
+                         [10, 16.36, 10], [20, 16.67, 10]])
 
     def test_vectorize_2001(self):
         """Test the `2001` case."""
         cl, poly = self.init_point(22, 6, 8, 14, 10, 20)
         self.assertEqual(cl, '2001')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[11.25, 20, 20], [17.5, 20, 10], [16.67, 10, 10], [10, 10, 14],
-                                  [10, 17.5, 20], [11.25, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[11.25, 20, 20], [17.5, 20, 10], [16.67, 10, 10],
+                         [10, 10, 14],
+                         [10, 17.5, 20], [11.25, 20, 20]])
 
     def test_vectorize_1022(self):
         """Test the `1022` case."""
         cl, poly = self.init_point(12, 6, 28, 24, 10, 20)
         self.assertEqual(cl, '1022')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 12], [13.33, 20, 10], [20, 18.18, 10], [20, 13.64, 20],
-                                  [10, 13.33, 20], [10, 20, 12]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 12], [13.33, 20, 10], [20, 18.18, 10],
+                         [20, 13.64, 20],
+                         [10, 13.33, 20], [10, 20, 12]])
 
     def test_vectorize_2102(self):
         """Test the `2102` case."""
         cl, poly = self.init_point(22, 16, 8, 24, 10, 20)
         self.assertEqual(cl, '2102')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10], [18.75, 10, 10],
+        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10],
+                                  [18.75, 10, 10],
                                   [12.5, 10, 20], [13.33, 20, 20]])
 
     def test_vectorize_2210(self):
@@ -687,7 +762,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(22, 26, 18, 4, 10, 20)
         self.assertEqual(cl, '2210')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 12.5, 20], [20, 10, 18], [14.29, 10, 10], [10, 13.33, 10],
+        self.valid_poly(poly[0], [[20, 12.5, 20], [20, 10, 18], [14.29, 10, 10],
+                                  [10, 13.33, 10],
                                   [10, 18.89, 20], [20, 12.5, 20]])
 
     def test_vectorize_0221(self):
@@ -695,8 +771,10 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(2, 26, 28, 14, 10, 20)
         self.assertEqual(cl, '0221')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 10], [17.5, 20, 20], [14.29, 10, 20], [10, 10, 14],
-                                  [10, 13.33, 10], [13.33, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[13.33, 20, 10], [17.5, 20, 20], [14.29, 10, 20],
+                         [10, 10, 14],
+                         [10, 13.33, 10], [13.33, 20, 10]])
 
     def test_vectorize_1002(self):
         """Test the `1002` case."""
@@ -704,7 +782,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1002')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [13.33, 20, 10], [18.75, 10, 10], [12.5, 10, 20],
+                        [[10, 20, 12], [13.33, 20, 10], [18.75, 10, 10],
+                         [12.5, 10, 20],
                          [10, 13.33, 20], [10, 20, 12]])
 
     def test_vectorize_2100(self):
@@ -712,7 +791,8 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(22, 16, 8, 4, 10, 20)
         self.assertEqual(cl, '2100')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10], [10, 13.33, 10],
+        self.valid_poly(poly[0], [[13.33, 20, 20], [20, 20, 16], [20, 12.5, 10],
+                                  [10, 13.33, 10],
                                   [10, 18.89, 20], [13.33, 20, 20]])
 
     def test_vectorize_0210(self):
@@ -720,16 +800,20 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(2, 26, 18, 4, 10, 20)
         self.assertEqual(cl, '0210')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.33, 20, 10], [17.5, 20, 20], [20, 12.5, 20], [20, 10, 18],
-                                  [14.29, 10, 10], [13.33, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[13.33, 20, 10], [17.5, 20, 20], [20, 12.5, 20],
+                         [20, 10, 18],
+                         [14.29, 10, 10], [13.33, 20, 10]])
 
     def test_vectorize_0021(self):
         """Test the `0021` case."""
         cl, poly = self.init_point(2, 6, 28, 14, 10, 20)
         self.assertEqual(cl, '0021')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 18.18, 10], [20, 13.64, 20], [14.29, 10, 20], [10, 10, 14],
-                                  [10, 13.33, 10], [20, 18.18, 10]])
+        self.valid_poly(poly[0],
+                        [[20, 18.18, 10], [20, 13.64, 20], [14.29, 10, 20],
+                         [10, 10, 14],
+                         [10, 13.33, 10], [20, 18.18, 10]])
 
     def test_vectorize_1220(self):
         """Test the `1220` case."""
@@ -737,7 +821,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1220')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15.71, 20, 20], [16.67, 10, 20], [12.5, 10, 10],
+                        [[10, 20, 12], [15.71, 20, 20], [16.67, 10, 20],
+                         [12.5, 10, 10],
                          [10, 17.5, 10], [10, 20, 12]])
 
     def test_vectorize_0122(self):
@@ -745,32 +830,41 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(2, 16, 28, 24, 10, 20)
         self.assertEqual(cl, '0122')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20], [10, 11.82, 20],
-                                  [10, 16.36, 10], [15.71, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[15.71, 20, 10], [20, 20, 16], [20, 16.67, 20],
+                         [10, 11.82, 20],
+                         [10, 16.36, 10], [15.71, 20, 10]])
 
     def test_vectorize_2012(self):
         """Test the `2012` case."""
         cl, poly = self.init_point(22, 6, 18, 24, 10, 20)
         self.assertEqual(cl, '2012')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[11.25, 20, 20], [17.5, 20, 10], [20, 16.67, 10], [20, 10, 18],
-                                  [16.67, 10, 20], [11.25, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[11.25, 20, 20], [17.5, 20, 10], [20, 16.67, 10],
+                         [20, 10, 18],
+                         [16.67, 10, 20], [11.25, 20, 20]])
 
     def test_vectorize_2201(self):
         """Test the `2201` case."""
         cl, poly = self.init_point(22, 26, 8, 14, 10, 20)
         self.assertEqual(cl, '2201')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[20, 16.67, 20], [20, 11.11, 10], [16.67, 10, 10], [10, 10, 14],
-                                  [10, 17.5, 20], [20, 16.67, 20]])
+        self.valid_poly(poly[0],
+                        [[20, 16.67, 20], [20, 11.11, 10], [16.67, 10, 10],
+                         [10, 10, 14],
+                         [10, 17.5, 20], [20, 16.67, 20]])
 
     def test_vectorize_0101a(self):
         """Test the `0101a` case."""
         cl, poly = self.init_point(2, 12, 8, 14, 10, 20)
         self.assertEqual(cl, '0101')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[18, 20, 10], [20, 20, 12], [20, 15, 10], [18, 20, 10]])
-        self.valid_poly(poly[1], [[16.67, 10, 10], [10, 10, 14], [10, 13.33, 10], [16.67, 10, 10]])
+        self.valid_poly(poly[0], [[18, 20, 10], [20, 20, 12], [20, 15, 10],
+                                  [18, 20, 10]])
+        self.valid_poly(poly[1],
+                        [[16.67, 10, 10], [10, 10, 14], [10, 13.33, 10],
+                         [16.67, 10, 10]])
 
     def test_vectorize_0101b(self):
         """Test the `0101b` case."""
@@ -778,7 +872,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0101')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[15, 20, 10], [20, 20, 18], [20, 12, 10], [16.67, 10, 10], [10, 10, 14],
+                        [[15, 20, 10], [20, 20, 18], [20, 12, 10],
+                         [16.67, 10, 10], [10, 10, 14],
                          [10, 13.33, 10], [15, 20, 10]])
 
     def test_vectorize_1010a(self):
@@ -786,8 +881,10 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(12, 2, 18, 4, 10, 20)
         self.assertEqual(cl, '1010')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10, 20, 12], [12, 20, 10], [10, 17.5, 10], [10, 20, 12]])
-        self.valid_poly(poly[1], [[20, 15, 10], [20, 10, 18], [14.29, 10, 10], [20, 15, 10]])
+        self.valid_poly(poly[0], [[10, 20, 12], [12, 20, 10], [10, 17.5, 10],
+                                  [10, 20, 12]])
+        self.valid_poly(poly[1], [[20, 15, 10], [20, 10, 18], [14.29, 10, 10],
+                                  [20, 15, 10]])
 
     def test_vectorize_1010b(self):
         """Test the `1010b` case."""
@@ -795,7 +892,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1010')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 12], [15, 20, 10], [20, 18, 10], [20, 10, 18], [14.29, 10, 10],
+                        [[10, 20, 12], [15, 20, 10], [20, 18, 10], [20, 10, 18],
+                         [14.29, 10, 10],
                          [10, 17.5, 10], [10, 20, 12]])
 
     def test_vectorize_2121b(self):
@@ -804,7 +902,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2121')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[15, 20, 20], [20, 20, 18], [20, 16.67, 20], [16, 10, 20], [10, 10, 14],
+                        [[15, 20, 20], [20, 20, 18], [20, 16.67, 20],
+                         [16, 10, 20], [10, 10, 14],
                          [10, 17.5, 20], [15, 20, 20]])
 
     def test_vectorize_2121c(self):
@@ -812,8 +911,10 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(26, 18, 28, 14, 10, 20)
         self.assertEqual(cl, '2121')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[17.5, 20, 20], [20, 20, 18], [20, 18, 20], [17.5, 20, 20]])
-        self.valid_poly(poly[1], [[14.29, 10, 20], [10, 10, 14], [10, 15, 20], [14.29, 10, 20]])
+        self.valid_poly(poly[0], [[17.5, 20, 20], [20, 20, 18], [20, 18, 20],
+                                  [17.5, 20, 20]])
+        self.valid_poly(poly[1], [[14.29, 10, 20], [10, 10, 14], [10, 15, 20],
+                                  [14.29, 10, 20]])
 
     def test_vectorize_1212b(self):
         """Test the `1212b` case."""
@@ -821,7 +922,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1212')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 18], [15, 20, 20], [20, 18, 20], [20, 10, 12], [13.33, 10, 20],
+                        [[10, 20, 18], [15, 20, 20], [20, 18, 20], [20, 10, 12],
+                         [13.33, 10, 20],
                          [10, 16.67, 20], [10, 20, 18]])
 
     def test_vectorize_1212b_center_equal_mx(self):
@@ -830,7 +932,8 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '1212')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[10, 20, 18], [15, 20, 20], [20, 17.5, 20], [20, 10, 14], [15, 10, 20],
+                        [[10, 20, 18], [15, 20, 20], [20, 17.5, 20],
+                         [20, 10, 14], [15, 10, 20],
                          [10, 17.5, 20], [10, 20, 18]])
 
     def test_vectorize_1212c(self):
@@ -838,8 +941,10 @@ class TestVectorizeIsoband(PygonizeTest):
         cl, poly = self.init_point(18, 28, 14, 26, 10, 20)
         self.assertEqual(cl, '1212')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10, 20, 18], [12, 20, 20], [10, 17.5, 20], [10, 20, 18]])
-        self.valid_poly(poly[1], [[20, 14.29, 20], [20, 10, 14], [15, 10, 20], [20, 14.29, 20]])
+        self.valid_poly(poly[0], [[10, 20, 18], [12, 20, 20], [10, 17.5, 20],
+                                  [10, 20, 18]])
+        self.valid_poly(poly[1], [[20, 14.29, 20], [20, 10, 14], [15, 10, 20],
+                                  [20, 14.29, 20]])
 
     def test_vectorize_2120b(self):
         """Test the `2120b` case."""
@@ -847,52 +952,64 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2120')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[18, 20, 20], [20, 20, 18], [20, 16.67, 20], [17.78, 10, 20],
-                         [12.22, 10, 10], [10, 11.82, 10], [10, 16.36, 20], [18, 20, 20]])
+                        [[18, 20, 20], [20, 20, 18], [20, 16.67, 20],
+                         [17.78, 10, 20],
+                         [12.22, 10, 10], [10, 11.82, 10], [10, 16.36, 20],
+                         [18, 20, 20]])
 
     def test_vectorize_2120c(self):
         """Test the `2120c` case."""
         cl, poly = self.init_point(28, 18, 29, 6, 10, 20)
         self.assertEqual(cl, '2120')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[18, 20, 20], [20, 20, 18], [20, 18.18, 20], [18, 20, 20]])
-        self.valid_poly(poly[1], [[16.09, 10, 20], [11.74, 10, 10], [10, 11.82, 10],
-                                  [10, 16.36, 20], [16.09, 10, 20]])
+        self.valid_poly(poly[0], [[18, 20, 20], [20, 20, 18], [20, 18.18, 20],
+                                  [18, 20, 20]])
+        self.valid_poly(poly[1],
+                        [[16.09, 10, 20], [11.74, 10, 10], [10, 11.82, 10],
+                         [10, 16.36, 20], [16.09, 10, 20]])
 
     def test_vectorize_2021b(self):
         """Test the `2021b` case."""
         cl, poly = self.init_point(28, 6, 24, 18, 10, 20)
         self.assertEqual(cl, '2021')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.64, 20, 20], [18.18, 20, 10], [20, 17.78, 10],
-                                  [20, 12.22, 20], [13.33, 10, 20], [10, 10, 18],
-                                  [10, 12, 20], [13.64, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[13.64, 20, 20], [18.18, 20, 10], [20, 17.78, 10],
+                         [20, 12.22, 20], [13.33, 10, 20], [10, 10, 18],
+                         [10, 12, 20], [13.64, 20, 20]])
 
     def test_vectorize_2021c(self):
         """Test the `2021c` case."""
         cl, poly = self.init_point(28, 6, 29, 18, 10, 20)
         self.assertEqual(cl, '2021')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[13.64, 20, 20], [18.18, 20, 10], [20, 18.26, 10],
-                                  [20, 13.91, 20], [13.64, 20, 20]])
-        self.valid_poly(poly[1], [[11.82, 10, 20], [10, 10, 18], [10, 12, 20], [11.82, 10, 20]])
+        self.valid_poly(poly[0],
+                        [[13.64, 20, 20], [18.18, 20, 10], [20, 18.26, 10],
+                         [20, 13.91, 20], [13.64, 20, 20]])
+        self.valid_poly(poly[1], [[11.82, 10, 20], [10, 10, 18], [10, 12, 20],
+                                  [11.82, 10, 20]])
 
     def test_vectorize_1202b(self):
         """Test the `1202b` case."""
         cl, poly = self.init_point(18, 24, 6, 28, 10, 20)
         self.assertEqual(cl, '1202')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 18], [13.33, 20, 20], [20, 17.78, 20], [20, 12.22, 10],
-                                  [18.18, 10, 10], [13.64, 10, 20], [10, 18, 20], [10, 20, 18]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 18], [13.33, 20, 20], [20, 17.78, 20],
+                         [20, 12.22, 10],
+                         [18.18, 10, 10], [13.64, 10, 20], [10, 18, 20],
+                         [10, 20, 18]])
 
     def test_vectorize_1202c(self):
         """Test the `1202c` case."""
         cl, poly = self.init_point(18, 29, 6, 28, 10, 20)
         self.assertEqual(cl, '1202')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10, 20, 18], [11.82, 20, 20], [10, 18, 20], [10, 20, 18]])
-        self.valid_poly(poly[1], [[20, 16.09, 20], [20, 11.74, 10], [18.18, 10, 10],
-                                  [13.64, 10, 20], [20, 16.09, 20]])
+        self.valid_poly(poly[0], [[10, 20, 18], [11.82, 20, 20], [10, 18, 20],
+                                  [10, 20, 18]])
+        self.valid_poly(poly[1],
+                        [[20, 16.09, 20], [20, 11.74, 10], [18.18, 10, 10],
+                         [13.64, 10, 20], [20, 16.09, 20]])
 
     def test_vectorize_0212b(self):
         """Test the `0212b` case."""
@@ -900,88 +1017,112 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0212')
         self.assertEqual(len(poly), 1)
         self.valid_poly(poly[0],
-                        [[12.22, 20, 10], [17.78, 20, 20], [20, 13.33, 20], [20, 10, 18],
-                         [18, 10, 20], [10, 13.64, 20], [10, 18.18, 10], [12.22, 20, 10]])
+                        [[12.22, 20, 10], [17.78, 20, 20], [20, 13.33, 20],
+                         [20, 10, 18],
+                         [18, 10, 20], [10, 13.64, 20], [10, 18.18, 10],
+                         [12.22, 20, 10]])
 
     def test_vectorize_0212c(self):
         """Test the `0212c` case."""
         cl, poly = self.init_point(6, 29, 18, 28, 10, 20)
         self.assertEqual(cl, '0212')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[11.74, 20, 10], [16.09, 20, 20], [10, 13.64, 20],
-                                  [10, 18.18, 10], [11.74, 20, 10]])
-        self.valid_poly(poly[1], [[20, 11.82, 20], [20, 10, 18], [18, 10, 20], [20, 11.82, 20]])
+        self.valid_poly(poly[0],
+                        [[11.74, 20, 10], [16.09, 20, 20], [10, 13.64, 20],
+                         [10, 18.18, 10], [11.74, 20, 10]])
+        self.valid_poly(poly[1], [[20, 11.82, 20], [20, 10, 18], [18, 10, 20],
+                                  [20, 11.82, 20]])
 
     def test_vectorize_0102a(self):
         """Test the `0102a` case."""
         cl, poly = self.init_point(2, 11, 4, 21, 10, 20)
         self.assertEqual(cl, '0102')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[18.89, 20, 10], [20, 20, 11], [20, 18.57, 10], [18.89, 20, 10]])
-        self.valid_poly(poly[1], [[16.47, 10, 10], [10.59, 10, 20], [10, 10.53, 20],
-                                  [10, 15.79, 10], [16.47, 10, 10]])
+        self.valid_poly(poly[0],
+                        [[18.89, 20, 10], [20, 20, 11], [20, 18.57, 10],
+                         [18.89, 20, 10]])
+        self.valid_poly(poly[1],
+                        [[16.47, 10, 10], [10.59, 10, 20], [10, 10.53, 20],
+                         [10, 15.79, 10], [16.47, 10, 10]])
 
     def test_vectorize_0102b(self):
         """Test the `0102b` case."""
         cl, poly = self.init_point(8, 11, 4, 21, 10, 20)
         self.assertEqual(cl, '0102')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[16.67, 20, 10], [20, 20, 11], [20, 18.57, 10], [16.47, 10, 10],
-                                  [10.59, 10, 20], [10, 10.77, 20], [10, 18.46, 10],
-                                  [16.67, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[16.67, 20, 10], [20, 20, 11], [20, 18.57, 10],
+                         [16.47, 10, 10],
+                         [10.59, 10, 20], [10, 10.77, 20], [10, 18.46, 10],
+                         [16.67, 20, 10]])
 
     def test_vectorize_0201a(self):
         """Test the `0201a` case."""
         cl, poly = self.init_point(2, 21, 4, 11, 10, 20)
         self.assertEqual(cl, '0201')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[14.21, 20, 10], [19.47, 20, 20], [20, 19.41, 20],
-                                  [20, 13.53, 10], [14.21, 20, 10]])
-        self.valid_poly(poly[1], [[11.43, 10, 10], [10, 10, 11], [10, 11.11, 10], [11.43, 10, 10]])
+        self.valid_poly(poly[0],
+                        [[14.21, 20, 10], [19.47, 20, 20], [20, 19.41, 20],
+                         [20, 13.53, 10], [14.21, 20, 10]])
+        self.valid_poly(poly[1],
+                        [[11.43, 10, 10], [10, 10, 11], [10, 11.11, 10],
+                         [11.43, 10, 10]])
 
     def test_vectorize_0201b(self):
         """Test the `0201b` case."""
         cl, poly = self.init_point(8, 21, 4, 11, 10, 20)
         self.assertEqual(cl, '0201')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[11.54, 20, 10], [19.23, 20, 20], [20, 19.41, 20],
-                                  [20, 13.53, 10], [11.43, 10, 10], [10, 10, 11],
-                                  [10, 13.33, 10], [11.54, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[11.54, 20, 10], [19.23, 20, 20], [20, 19.41, 20],
+                         [20, 13.53, 10], [11.43, 10, 10], [10, 10, 11],
+                         [10, 13.33, 10], [11.54, 20, 10]])
 
     def test_vectorize_1020a(self):
         """Test the `1020a` case."""
         cl, poly = self.init_point(11, 2, 21, 4, 10, 20)
         self.assertEqual(cl, '1020')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10, 20, 11], [11.11, 20, 10], [10, 18.57, 10], [10, 20, 11]])
-        self.valid_poly(poly[1], [[20, 15.79, 10], [20, 10.53, 20], [19.41, 10, 20],
-                                  [13.53, 10, 10], [20, 15.79, 10]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 11], [11.11, 20, 10], [10, 18.57, 10],
+                         [10, 20, 11]])
+        self.valid_poly(poly[1],
+                        [[20, 15.79, 10], [20, 10.53, 20], [19.41, 10, 20],
+                         [13.53, 10, 10], [20, 15.79, 10]])
 
     def test_vectorize_1020b(self):
         """Test the `1020b` case."""
         cl, poly = self.init_point(11, 8, 21, 4, 10, 20)
         self.assertEqual(cl, '1020')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10, 20, 11], [13.33, 20, 10], [20, 18.46, 10], [20, 10.77, 20],
-                                  [19.41, 10, 20], [13.53, 10, 10], [10, 18.57, 10], [10, 20, 11]])
+        self.valid_poly(poly[0],
+                        [[10, 20, 11], [13.33, 20, 10], [20, 18.46, 10],
+                         [20, 10.77, 20],
+                         [19.41, 10, 20], [13.53, 10, 10], [10, 18.57, 10],
+                         [10, 20, 11]])
 
     def test_vectorize_2010a(self):
         """Test the `2010a` case."""
         cl, poly = self.init_point(21, 2, 11, 4, 10, 20)
         self.assertEqual(cl, '2010')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10.53, 20, 20], [15.79, 20, 10], [10, 13.53, 10],
-                                  [10, 19.41, 20], [10.53, 20, 20]])
-        self.valid_poly(poly[1], [[20, 11.11, 10], [20, 10, 11], [18.57, 10, 10], [20, 11.11, 10]])
+        self.valid_poly(poly[0],
+                        [[10.53, 20, 20], [15.79, 20, 10], [10, 13.53, 10],
+                         [10, 19.41, 20], [10.53, 20, 20]])
+        self.valid_poly(poly[1],
+                        [[20, 11.11, 10], [20, 10, 11], [18.57, 10, 10],
+                         [20, 11.11, 10]])
 
     def test_vectorize_2010b(self):
         """Test the `2010b` case."""
         cl, poly = self.init_point(21, 8, 11, 4, 10, 20)
         self.assertEqual(cl, '2010')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10.77, 20, 20], [18.46, 20, 10], [20, 13.33, 10],
-                                  [20, 10, 11], [18.57, 10, 10], [10, 13.53, 10], [10, 19.41, 20],
-                                  [10.77, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[10.77, 20, 20], [18.46, 20, 10], [20, 13.33, 10],
+                         [20, 10, 11], [18.57, 10, 10], [10, 13.53, 10],
+                         [10, 19.41, 20],
+                         [10.77, 20, 20]])
 
     def test_vectorize_2020a(self):
         """Test the `2020a` case."""
@@ -989,29 +1130,34 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '2020')
         self.assertEqual(len(poly), 2)
         self.valid_poly(poly[0],
-                        [[10.38, 20, 20.0], [14.23, 20, 10.0], [10, 15.93, 10], [10, 19.63, 20],
+                        [[10.38, 20, 20.0], [14.23, 20, 10.0], [10, 15.93, 10],
+                         [10, 19.63, 20],
                          [10.38, 20, 20.0]])
-        self.valid_poly(poly[1], [[20, 14.44, 10], [20, 10.74, 20], [19.29, 10, 20],
-                                  [15.71, 10, 10], [20, 14.44, 10]])
+        self.valid_poly(poly[1],
+                        [[20, 14.44, 10], [20, 10.74, 20], [19.29, 10, 20],
+                         [15.71, 10, 10], [20, 14.44, 10]])
 
     def test_vectorize_2020b(self):
         """Test the `2020b` case."""
         cl, poly = self.init_point(21, 5, 22, 6, 10, 20)
         self.assertEqual(cl, '2020')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[10.63, 20, 20], [16.88, 20, 10], [20, 17.06, 10],
-                                  [20, 11.18, 20], [18.75, 10, 20], [12.5, 10, 10],
-                                  [10, 12.67, 10], [10, 19.33, 20], [10.63, 20, 20]])
+        self.valid_poly(poly[0],
+                        [[10.63, 20, 20], [16.88, 20, 10], [20, 17.06, 10],
+                         [20, 11.18, 20], [18.75, 10, 20], [12.5, 10, 10],
+                         [10, 12.67, 10], [10, 19.33, 20], [10.63, 20, 20]])
 
     def test_vectorize_2020c(self):
         """Test the `2020c` case."""
         cl, poly = self.init_point(35, 9, 29, 8, 10, 20)
         self.assertEqual(cl, '2020')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[15.77, 20, 20], [19.62, 20, 10], [20, 19.5, 10],
-                                  [20, 14.5, 20], [15.77, 20, 20]])
-        self.valid_poly(poly[1], [[15.71, 10, 20], [10.95, 10, 10], [10, 10.74, 10],
-                                  [10, 14.44, 20], [15.71, 10, 20]])
+        self.valid_poly(poly[0],
+                        [[15.77, 20, 20], [19.62, 20, 10], [20, 19.5, 10],
+                         [20, 14.5, 20], [15.77, 20, 20]])
+        self.valid_poly(poly[1],
+                        [[15.71, 10, 20], [10.95, 10, 10], [10, 10.74, 10],
+                         [10, 14.44, 20], [15.71, 10, 20]])
 
     def test_vectorize_0202a(self):
         """Test the `0202a` case."""
@@ -1019,29 +1165,35 @@ class TestVectorizeIsoband(PygonizeTest):
         self.assertEqual(cl, '0202')
         self.assertEqual(len(poly), 2)
         self.valid_poly(poly[0],
-                        [[15.77, 20, 10.0], [19.62, 20, 20.0], [20, 19.63, 20], [20, 15.93, 10],
+                        [[15.77, 20, 10.0], [19.62, 20, 20.0], [20, 19.63, 20],
+                         [20, 15.93, 10],
                          [15.77, 20, 10.0]])
-        self.valid_poly(poly[1], [[14.29, 10, 10], [10.71, 10, 20], [10, 10.74, 20],
-                                  [10, 14.44, 10], [14.29, 10, 10]])
+        self.valid_poly(poly[1],
+                        [[14.29, 10, 10], [10.71, 10, 20], [10, 10.74, 20],
+                         [10, 14.44, 10], [14.29, 10, 10]])
 
     def test_vectorize_0202b(self):
         """Test the `0202b` case."""
         cl, poly = self.init_point(4, 21, 8, 22, 10, 20)
         self.assertEqual(cl, '0202')
         self.assertEqual(len(poly), 1)
-        self.valid_poly(poly[0], [[13.53, 20, 10], [19.41, 20, 20], [20, 19.23, 20],
-                                  [20, 11.54, 10], [18.57, 10, 10], [11.43, 10, 20],
-                                  [10, 11.11, 20], [10, 16.67, 10], [13.53, 20, 10]])
+        self.valid_poly(poly[0],
+                        [[13.53, 20, 10], [19.41, 20, 20], [20, 19.23, 20],
+                         [20, 11.54, 10], [18.57, 10, 10], [11.43, 10, 20],
+                         [10, 11.11, 20], [10, 16.67, 10], [13.53, 20, 10]])
 
     def test_vectorize_0202c(self):
         """Test the `0202c` case."""
         cl, poly = self.init_point(8, 41, 5, 32, 10, 20)
         self.assertEqual(cl, '0202')
         self.assertEqual(len(poly), 2)
-        self.valid_poly(poly[0], [[10.61, 20, 10], [13.64, 20, 20], [10, 15, 20], [10, 19.17, 10],
-                                  [10.61, 20, 10]])
-        self.valid_poly(poly[1], [[20, 14.17, 20], [20, 11.39, 10], [18.15, 10, 10],
-                                  [14.44, 10, 20], [20, 14.17, 20]])
+        self.valid_poly(poly[0],
+                        [[10.61, 20, 10], [13.64, 20, 20], [10, 15, 20],
+                         [10, 19.17, 10],
+                         [10.61, 20, 10]])
+        self.valid_poly(poly[1],
+                        [[20, 14.17, 20], [20, 11.39, 10], [18.15, 10, 10],
+                         [14.44, 10, 20], [20, 14.17, 20]])
 
 
 class TestVectorizeIsobands(PygonizeTest):
@@ -1069,9 +1221,11 @@ class TestVectorizeIsobands(PygonizeTest):
         self.init_point(50, 40, 42, 45)
         polys = self.sq.vectorize_isobands([42, 44, 46])
         self.assertEqual(len(polys), 2)
-        self.valid_poly(polys[0], [[16, 20, 44], [18, 20, 42], [20, 10, 42], [13.33, 10, 44],
+        self.valid_poly(polys[0], [[16, 20, 44], [18, 20, 42], [20, 10, 42],
+                                   [13.33, 10, 44],
                                    [16, 20, 44]])
-        self.valid_poly(polys[1], [[14, 20, 46], [16, 20, 44], [13.33, 10, 44], [10, 10, 45],
+        self.valid_poly(polys[1], [[14, 20, 46], [16, 20, 44], [13.33, 10, 44],
+                                   [10, 10, 45],
                                    [10, 12, 46], [14, 20, 46]])
 
     def test_vectorize_multiple_levels_2(self):
@@ -1079,9 +1233,11 @@ class TestVectorizeIsobands(PygonizeTest):
         self.init_point(50, 40, 42, 45)
         polys = self.sq.vectorize_isobands([40, 45, 50])
         self.assertEqual(len(polys), 2)
-        self.valid_poly(polys[0], [[15, 20, 45], [20, 20, 40], [20, 10, 42], [10, 10, 45],
-                                   [15, 20, 45]])
-        self.valid_poly(polys[1], [[10, 20, 50], [15, 20, 45], [10, 10, 45], [10, 20, 50]])
+        self.valid_poly(polys[0],
+                        [[15, 20, 45], [20, 20, 40], [20, 10, 42], [10, 10, 45],
+                         [15, 20, 45]])
+        self.valid_poly(polys[1], [[10, 20, 50], [15, 20, 45], [10, 10, 45],
+                                   [10, 20, 50]])
 
     def test_vectorize_multiple_levels_3(self):
         """Test to vectorize with multiple levels #3."""
@@ -1100,31 +1256,39 @@ class TestVectorizeIsobands(PygonizeTest):
         self.init_point(50, 40, 42, 45)
         polys = self.sq.vectorize_isobands([20, 25, 30, 35, 40, 45, 50, 55, 60])
         self.assertEqual(len(polys), 2)
-        self.valid_poly(polys[0], [[15, 20, 45], [20, 20, 40], [20, 10, 42], [10, 10, 45],
-                                   [15, 20, 45]])
-        self.valid_poly(polys[1], [[10, 20, 50], [15, 20, 45], [10, 10, 45], [10, 20, 50]])
+        self.valid_poly(polys[0],
+                        [[15, 20, 45], [20, 20, 40], [20, 10, 42], [10, 10, 45],
+                         [15, 20, 45]])
+        self.valid_poly(polys[1], [[10, 20, 50], [15, 20, 45], [10, 10, 45],
+                                   [10, 20, 50]])
 
     def test_vectorize_multiple_levels_6(self):
         """Test to vectorize with multiple levels #6."""
         self.init_point(50, 40, 42, 45)
         polys = self.sq.vectorize_isobands([0, 100])
         self.assertEqual(len(polys), 1)
-        self.valid_poly(polys[0], [[10, 20, 50], [20, 20, 40], [20, 10, 42], [10, 10, 45],
-                                   [10, 20, 50]])
+        self.valid_poly(polys[0],
+                        [[10, 20, 50], [20, 20, 40], [20, 10, 42], [10, 10, 45],
+                         [10, 20, 50]])
 
     def test_vectorize_multiple_levels_7(self):
         """Test to vectorize with multiple levels #7."""
         self.init_point(50, 40, 42, 45)
         polys = self.sq.vectorize_isobands(range(30, 52, 2))
         self.assertEqual(len(polys), 5)
-        self.valid_poly(polys[0], [[18, 20, 42], [20, 20, 40], [20, 10, 42], [18, 20, 42]])
-        self.valid_poly(polys[1], [[16, 20, 44], [18, 20, 42], [20, 10, 42], [13.33, 10, 44],
+        self.valid_poly(polys[0], [[18, 20, 42], [20, 20, 40], [20, 10, 42],
+                                   [18, 20, 42]])
+        self.valid_poly(polys[1], [[16, 20, 44], [18, 20, 42], [20, 10, 42],
+                                   [13.33, 10, 44],
                                    [16, 20, 44]])
-        self.valid_poly(polys[2], [[14, 20, 46], [16, 20, 44], [13.33, 10, 44], [10, 10, 45],
+        self.valid_poly(polys[2], [[14, 20, 46], [16, 20, 44], [13.33, 10, 44],
+                                   [10, 10, 45],
                                    [10, 12, 46], [14, 20, 46]])
-        self.valid_poly(polys[3], [[12, 20, 48], [14, 20, 46], [10, 12, 46], [10, 16, 48],
-                                   [12, 20, 48]])
-        self.valid_poly(polys[4], [[10, 20, 50], [12, 20, 48], [10, 16, 48], [10, 20, 50]])
+        self.valid_poly(polys[3],
+                        [[12, 20, 48], [14, 20, 46], [10, 12, 46], [10, 16, 48],
+                         [12, 20, 48]])
+        self.valid_poly(polys[4], [[10, 20, 50], [12, 20, 48], [10, 16, 48],
+                                   [10, 20, 50]])
 
 
 if __name__ == '__main__':

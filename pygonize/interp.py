@@ -1,9 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# coding: utf-8
 
 """Linear interpolation."""
 
-from __future__ import print_function, division
+
 from shapely.geometry import LineString
 
 

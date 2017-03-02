@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# coding: utf-8
 
 """Pygonize: polygonize raster data."""
 
@@ -104,8 +104,9 @@ class Pygonize:
         """
         dst = gdal.Open(fn)
         self.z = dst.GetRasterBand(band).ReadAsArray()
-        xmin, dx, _, ymin, _, dy = dst.GetGeoTransform()  # geographic informations
+        xmin, dx, _, ymin, _, dy = dst.GetGeoTransform()  # geographic info
         dst = None  # close dataset
+        del dst
 
         ny, nx = self.z.shape
         self.lx = numpy.arange(xmin + dx / 2, xmin + nx * dx, dx)
@@ -113,7 +114,8 @@ class Pygonize:
 
         # Log
         log.info("read raster of {0} x {1}".format(nx, ny))
-        log.debug("data value from {0:.2f} to {1:.2f}".format(self.z.min(), self.z.max()))
+        log.debug("data value from {0:.2f} to {1:.2f}".format(
+            self.z.min(), self.z.max()))
 
     def vectorize_isobands(self, levels):
         """Vectorization of isobands.
@@ -123,7 +125,7 @@ class Pygonize:
         """
         levels = sorted(levels)
         log.debug("create pool of worker to vectorize data")
-        pool = multiprocessing.Pool()  # start a pool of worker on the local machine
+        pool = multiprocessing.Pool()  # start a pool of worker
         outs = list()  # list of multiprocessing.pool.AsyncResult
 
         ny, nx = self.z.shape
@@ -132,7 +134,8 @@ class Pygonize:
         x, y = numpy.meshgrid(self.lx, self.ly)
 
         # Split dataset into squares and vectorize
-        log.info("starting isoband vectorization with levels {0}...".format(levels))
+        log.info("starting isoband vectorization with levels {0}...".format(
+            levels))
         for iy in range(ny - 1):
             for ix in range(nx - 1):
                 part_z = self.z[iy:iy+2, ix:ix+2]
@@ -145,7 +148,8 @@ class Pygonize:
                 p4 = Point(part_x[1, 0], part_y[1, 0], part_z[1, 0])
 
                 # Create task
-                w = pool.apply_async(vectorize_isoband_worker, args=(p1, p2, p3, p4, levels))
+                w = pool.apply_async(vectorize_isoband_worker,
+                                     args=(p1, p2, p3, p4, levels))
                 outs.append(w)
 
         # Wait for all process to be terminated
@@ -192,7 +196,8 @@ class Pygonize:
             zmin = min(zmn1, zmn2)
             zmax = max(zmx1, zmx2)
 
-            zmin = format(zmin, '.{scale}f'.format(scale=scale))  # convert with specific scale
+            # convert with specific scale
+            zmin = format(zmin, '.{scale}f'.format(scale=scale))
             zmax = format(zmax, '.{scale}f'.format(scale=scale))
             del zs
 

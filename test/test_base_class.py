@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# coding: utf-8
 
 """Test base class."""
 
@@ -32,7 +32,7 @@ def prettify(val, ndigits=2):
 def ppolys(polys, output='stdout'):
     """Print poly coordinates.
 
-    :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon object.
+    :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon.
     :param output: 'stdout' to print string, all other value to return string.
     :return: string.
     """
@@ -40,7 +40,8 @@ def ppolys(polys, output='stdout'):
         polys = [polys]
     out = list()
     for poly in polys:
-        out.append(str([[prettify(v) for v in e] for e in poly.exterior.coords[:]]))
+        out.append(str([[prettify(v) for v in e]
+                        for e in poly.exterior.coords[:]]))
     if output == 'stdout':
         print('\n'.join(out))
     else:
@@ -50,10 +51,10 @@ def ppolys(polys, output='stdout'):
 def figpolys(polys, x=None, y=None, fno=None):
     """Create figure with poygons.
 
-    :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon object.
+    :param polys: shapely.geometry.Polygon or list of shapely.geometry.Polygon.
     :param x: list of X coordinates or None.
     :param y: list of Y coordinates or None.
-    :param fn: path of figure to save figure into file or None.
+    :param fno: path of figure to save figure into file or None.
     """
     if not isinstance(polys, list):
         polys = [polys]
@@ -62,7 +63,8 @@ def figpolys(polys, x=None, y=None, fno=None):
     ax.set(aspect=1)
     for p in polys:
         color = numpy.random.rand(3, 1)
-        mp = mpatches.Polygon(numpy.asarray(p.exterior)[:, 0:2], color=color, alpha=0.5)
+        mp = mpatches.Polygon(numpy.asarray(p.exterior)[:, 0:2], color=color,
+                              alpha=0.5)
         ax.add_patch(mp)
     if x is not None and y is not None:
         gx, gy = numpy.meshgrid(x, y)
@@ -99,7 +101,8 @@ class PygonizeTest(unittest.TestCase):
         """
         coords = list(p.exterior.coords)
         self.assertEqual(len(coords), len(coo))
-        msg = "differences between coordinates !\nlist1 = {c1}\nlist2 = {c2}".format(
+        msg = ("differences between coordinates !\n"
+               "list1 = {c1}\nlist2 = {c2}").format(
             c1=str(coo), c2=ppolys(p, output='str'))
         for (x1, y1, z1), (x2, y2, z2) in zip(coords, coo):
             self.assertAlmostEqual(x1, x2, delta=0.1, msg=msg)
