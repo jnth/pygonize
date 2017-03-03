@@ -1,5 +1,7 @@
 # TODOs
 
+ * Optimization for large dataset
+ 
  * Better documentation.
 
  * Better setup.py with test inside.

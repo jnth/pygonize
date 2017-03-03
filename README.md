@@ -7,6 +7,7 @@ This script is under development and work with Python 3.5 and 3.6.
 
 [![Build Status](https://travis-ci.org/jnth/pygonize.svg?branch=master)](https://travis-ci.org/jnth/pygonize)
 
+![example](img/example.png)
 
 
 ## Install
